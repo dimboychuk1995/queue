@@ -1,0 +1,19 @@
+*[hint] {
+    position: relative;
+}
+*[hint]:hover:after {
+    content: attr(hint);
+    position: absolute;
+    left: -15px;
+    bottom: 25px;
+    width: 200px;
+    max-width: 200px;
+    z-index: 100;
+    background-color: #f94419;
+    line-height: 16px;
+    color: #006;
+    padding: 4px;
+    border-radius: 5px;
+    align-content: center;
+
+}

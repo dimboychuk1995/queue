@@ -14,3 +14,5 @@
 //Route::get('/', 'IndexController@index');
 get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
 get('/admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
+get('/queue_create', ['as' => 'queue_create', 'uses' => 'IndexController@create']);
+//$router->resource('post', 'IndexController');

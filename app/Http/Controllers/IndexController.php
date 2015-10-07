@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Queue;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Queue;
+use App\Current_setting;
 
 class IndexController extends Controller
 {
@@ -16,9 +17,12 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $queue = Queue::all();
+        $queueModel = new Queue();
+        $queue = $queueModel->all();
+        $cur_settings = Current_setting::all();
+        //dd($queue);
 
-        return view('index.index', ['queue' => $queue]);
+        return view('index.index', ['queue' => $queue, 'cur_settings' => $cur_settings]);
     }
 
     /**
@@ -28,7 +32,7 @@ class IndexController extends Controller
      */
     public function create()
     {
-        //
+        echo("Create New success");
     }
 
     /**
