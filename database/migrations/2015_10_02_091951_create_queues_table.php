@@ -17,7 +17,7 @@ class CreateQueuesTable extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->date('date');
-            $table->integer('register_key')->unique();
+            $table->bigInteger('register_key')->unique();
             $table->string('user_name', 60)->nullable();
             $table->integer('user_personal_key')->nullable();
             $table->date('register_date');

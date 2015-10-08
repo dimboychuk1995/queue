@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Queue extends Model
 {
+    protected $fillable = array('start_time',
+        'end_time',
+        'date',
+        'register_key',
+        'user_name',
+        'user_personal_key',
+        'register_date');
     public function setQueue($param){
 
     }

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Queue;
 use Illuminate\Http\Request;
+//use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Current_setting;
+use Carbon\Carbon;
 
 class IndexController extends Controller
 {
@@ -19,6 +21,9 @@ class IndexController extends Controller
     {
         $queueModel = new Queue();
         $queue = $queueModel->all();
+        foreach($queue as $q){
+
+        }
         $cur_settings = Current_setting::all();
         //dd($queue);
 
@@ -32,7 +37,7 @@ class IndexController extends Controller
      */
     public function create()
     {
-        echo("Create New success");
+
     }
 
     /**
@@ -41,9 +46,17 @@ class IndexController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Queue $queueModel, Current_setting $cur_setting, Request $request)
     {
-        //
+        $cur_date = Carbon::today()->toDateString();
+        $cur_date = str_replace('-', '', $cur_date);
+        $rand = rand(0,9999);
+        $cur_date .= $rand;
+        $data = $request->all();
+        unset($data['_token']);
+        $data['register_key'] = $cur_date;
+        $queueModel->create($data);
+        var_dump($data);
     }
 
     /**
@@ -52,9 +65,9 @@ class IndexController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getDay(Queue $queueModel, Current_setting $cur_setting, Request $request)
     {
-        //
+
     }
 
     /**

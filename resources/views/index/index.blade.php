@@ -14,34 +14,7 @@
     <script src="./lang/uk.js"></script>
     <script src="./lib/bootstrap.js"></script>
     <script src="./lib/myJs.js"></script>
-
-<script>
-	$(document).ready(function() {
-        var date = new Date();
-        lang: 'es'
-		$('#calendar').fullCalendar({
-			defaultDate: date,
-			editable: true,
-			eventLimit: true, // allow "more" link when too many events
-			events: [
-                {
-                    title: 'Тест',
-                    url: '#',
-                    start: date,
-                    end: date
-                },
-                {
-                    title: 'Тест',
-                    url: '#',
-                    start: '2015-10-07',
-                    end: '2015-10-07'
-                }
-			]
-		});
-		
-	});
-
-</script>
+    <script src="./lib/moment.js"></script>
 </head>
 <body>
     
@@ -135,7 +108,7 @@
                                 @foreach($cur_settings as $cur_set)
                                 @if($cur_set->period_end_time <= '13:01')
                                 <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">{{$cur_set->period_start_time}} - {{$cur_set->period_end_time}}</a>
+                                    <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
                                     <a href="#" class="btn btn-warning second disabled">Вільно</a>
                                     <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
                                 </div>
@@ -299,7 +272,8 @@
                       </div>
                         <input type="hidden" id="start_time">
                         <input type="hidden" id="end_time">
-                      <button type="button" class="btn btn-success btn-lg btn-sbt" onclick="myFunction()">Підтвердити <i class="fa fa-check"></i></button>
+                        <input type="hidden" id="date">
+                      <button type="button" class="btn btn-success btn-lg btn-sbt">Підтвердити <i class="fa fa-check"></i></button>
                     </div>
                 </div>
                 <div class="modal-footer"> 
@@ -312,24 +286,77 @@
 </html>
 <script>
     $(document).ready(function(){
+
+        var date = new Date();
+        var cur_date = moment().format("YYYY-MM-DD");
+        $('#date').val(cur_date);
+        lang: 'es';
+        var tempVar = "";
+        $('#calendar').fullCalendar({
+            defaultDate: date,
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            dayClick: function(date, allDay, jsEvent, view) {//todo функції для роботи з івентами(дивись документацію)
+                // change the day's background color just for fun
+                if (tempVar == "")
+                {
+                    $(this).css('background-color', '#00F1FF');
+                    tempVar = this;
+                }
+                else
+                {
+                    $(tempVar).css('background-color', 'white');
+                    $(this).css('background-color', '#00F1FF');
+
+                    tempVar = this;
+
+                }
+                cur_date = date.format();
+                $('#date').val(cur_date);
+
+            }
+        });
+
+        function getTimePeriod(current_date){//todo функція перемалювання розкладу сторінок
+            $.ajax({
+                method:"POST", //Todo Перевести на метод пост
+                url: '{{ route('queue_day_status') }}',
+                data:{
+                    start_time : $("#start_time").val(),
+                    end_time : $("#end_time").val(),
+                    name: $('#user_name').val(),
+                    personal_key: $('#personal_key').val(),
+                    date: $('#date').val(),
+                    _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
+                }
+            }).done(function(msg){
+                alert(msg);
+                $('#modal-1').modal('hide');
+            });
+        }
+
         $('.reg_but').click(function(){
             $("#start_time").val($(this).attr('start-time'));
             $("#end_time").val($(this).attr('end-time'));
         });
         $('.btn-sbt').click(function(){
             $.ajax({
-                method:"POST",
+                method:"POST", //Todo Перевести на метод пост
                 url: '{{ route('queue_create') }}',
                 data:{
                     start_time : $("#start_time").val(),
                     end_time : $("#end_time").val(),
                     name: $('#user_name').val(),
-                    personal_key: $('#personal_key').val()
+                    personal_key: $('#personal_key').val(),
+                    date: $('#date').val(),
+                    _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
                 }
             }).done(function(msg){
                 alert(msg);
+                $('#modal-1').modal('hide');
             });
         });
+
     });
     function myFunction() {
         var x = document.getElementById("demo");
