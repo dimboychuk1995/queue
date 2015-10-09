@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Queue;
 use Illuminate\Http\Request;
+use Response;
 //use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -21,9 +22,6 @@ class IndexController extends Controller
     {
         $queueModel = new Queue();
         $queue = $queueModel->all();
-        foreach($queue as $q){
-
-        }
         $cur_settings = Current_setting::all();
         //dd($queue);
 
@@ -67,6 +65,11 @@ class IndexController extends Controller
      */
     public function getDay(Queue $queueModel, Current_setting $cur_setting, Request $request)
     {
+        //todo Зробити функціонал для оновлення інформації про чергу відносно дня.
+        $queueModel = new Queue();
+        $queue = $queueModel->all();
+        $cur_settings = Current_setting::all();
+        return Response::json($cur_settings);
 
     }
 

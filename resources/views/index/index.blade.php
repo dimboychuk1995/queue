@@ -104,7 +104,7 @@
                             </h4>
                         </div>
                         <div id="collapse-1" class="panel-collapse collapse in">
-                            <div class="panel-body">
+                            <div class="panel-body am_time">
                                 @foreach($cur_settings as $cur_set)
                                 @if($cur_set->period_end_time <= '13:01')
                                 <div class="btn-group btn-group-md btn-in-accordion">
@@ -170,7 +170,7 @@
                             </h4>
                         </div>
                         <div id="collapse-2" class="panel-collapse collapse">
-                            <div class="panel-body">
+                            <div class="panel-body pm_time">
                                 @foreach($cur_settings as $cur_set)
                                 @if($cur_set->period_end_time >= '13:01')
                                 <div class="btn-group btn-group-md btn-in-accordion">
@@ -287,7 +287,8 @@
 <script>
     $(document).ready(function(){
 
-        var date = new Date();
+        var today = moment().format("YYYY-MM-DD");
+        var next_day = moment().add(5,'d').format("YYYY-MM-DD");
         var cur_date = moment().format("YYYY-MM-DD");
         $('#date').val(cur_date);
         lang: 'es';
@@ -298,44 +299,57 @@
             eventLimit: true, // allow "more" link when too many events
             dayClick: function(date, allDay, jsEvent, view) {//todo функції для роботи з івентами(дивись документацію)
                 // change the day's background color just for fun
-                if (tempVar == "")
-                {
-                    $(this).css('background-color', '#00F1FF');
-                    tempVar = this;
+                if(date.format() >= today && date.format() <= next_day){
+                    if (tempVar == "")
+                    {
+                        $(this).css('background-color', '#00F1FF');
+                        tempVar = this;
+                    }
+                    else
+                    {
+                        $(tempVar).css('background-color', 'grey');
+                        $(this).css('background-color', '#00F1FF');
+
+                        tempVar = this;
+
+                    }
+                    cur_date = date.format();
+                    $('#date').val(cur_date);
+                    getTimePeriod(cur_date);
                 }
-                else
-                {
-                    $(tempVar).css('background-color', 'white');
-                    $(this).css('background-color', '#00F1FF');
-
-                    tempVar = this;
-
-                }
-                cur_date = date.format();
-                $('#date').val(cur_date);
-
             }
         });
 
         function getTimePeriod(current_date){//todo функція перемалювання розкладу сторінок
             $.ajax({
+                dataType: 'json',
                 method:"POST", //Todo Перевести на метод пост
                 url: '{{ route('queue_day_status') }}',
                 data:{
-                    start_time : $("#start_time").val(),
-                    end_time : $("#end_time").val(),
-                    name: $('#user_name').val(),
-                    personal_key: $('#personal_key').val(),
                     date: $('#date').val(),
                     _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
                 }
-            }).done(function(msg){
-                alert(msg);
-                $('#modal-1').modal('hide');
+            }).done(function(data){
+                $('.am_time').children().remove();
+                $('.pm_time').children().remove();
+                $.each(data, function(key, val){
+
+            var template =  ' <div class="btn-group btn-group-md btn-in-accordion">'+
+                            '<a href="" class="btn btn-default top">'+val.period_start_time.slice(0,-3)+' - '+val.period_end_time.slice(0,-3)+'</a>'+
+                            '<a href="#" class="btn btn-warning second disabled">Вільно</a>'+
+                            '<a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="'+val.period_start_time+ '" end-time="'+val.period_end_time+'">Замовити</a>'+
+                            '</div>' ;
+                    if(val.period_end_time < "13:01"){
+                        $('.am_time').append(template);
+                    }
+                    if(val.period_end_time > "13:01"){
+                        $('.pm_time').append(template);
+                    }
+                });
             });
         }
 
-        $('.reg_but').click(function(){
+        $(document).on('click', '.reg_but', function(){
             $("#start_time").val($(this).attr('start-time'));
             $("#end_time").val($(this).attr('end-time'));
         });
