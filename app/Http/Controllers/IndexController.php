@@ -23,6 +23,10 @@ class IndexController extends Controller
         $queueModel = new Queue();
         $queue = $queueModel->all();
         $cur_settings = Current_setting::all();
+        foreach ($cur_settings as $c){
+            $check = Queue::find()->where('start_time', '=', $c['period_start_time'])
+                ->where('date', '=',$c['day_date'] );
+        }
         //dd($queue);
 
         return view('index.index', ['queue' => $queue, 'cur_settings' => $cur_settings]);
