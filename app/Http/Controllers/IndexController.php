@@ -24,8 +24,8 @@ class IndexController extends Controller
         $queue = $queueModel->all();
         $cur_settings = Current_setting::all();
         foreach ($cur_settings as $c){
-            $check = Queue::find()->where('start_time', '=', $c['period_start_time'])
-                ->where('date', '=',$c['day_date'] );
+           // $check = Queue::find()->where('start_time', '=', $c['period_start_time'])
+             //   ->where('date', '=',$c['day_date'] );
         }
         //dd($queue);
 
