@@ -62,8 +62,9 @@ class IndexController extends Controller
         $checked = false;
         while(!$checked){
             $rand = rand(0,9999);
-            $cur_date .= $rand;
-            if($queueModel->where('register_key', '=', $cur_date)->get()->count() == 0){
+            $check_date = $cur_date.$rand;
+            if($queueModel->where('register_key', '=', $check_date)->get()->count() == 0){
+                $cur_date .= $rand;
                 $checked = true;
             }else{
                 $checked = false;
@@ -72,8 +73,9 @@ class IndexController extends Controller
         }
         $data = $request->all();
         unset($data['_token']);
-        $data['register_key'] = substr($cur_date, -4);
+        $data['register_key'] = $cur_date;
         $queueModel->create($data);
+        $data['register_key'] = substr($cur_date, -4);
         return Response::json($data);
     }
 

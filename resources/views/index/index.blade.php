@@ -327,13 +327,13 @@
                 data:{
                     start_time : $("#start_time").val(),
                     end_time : $("#end_time").val(),
-                    name: $('#user_name').val(),
-                    personal_key: $('#personal_key').val(),
+                    user_name: $('#user_name').val(),
+                    user_personal_key: $('#personal_key').val(),
                     date: $('#date').val(),
                     _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
                 }
             }).done(function(data){
-               //alert(data.register_key);
+               console.log(data);
                 getTimePeriod();
                 $('#modal-1').modal('hide');
                 $('#register_key_val').text(data.register_key);
