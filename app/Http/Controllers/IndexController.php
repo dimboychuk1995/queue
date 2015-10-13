@@ -23,13 +23,19 @@ class IndexController extends Controller
         $queueModel = new Queue();
         $queue = $queueModel->all();
         $cur_settings = Current_setting::all();
+        $result = array();
         foreach ($cur_settings as $c){
-           // $check = Queue::find()->where('start_time', '=', $c['period_start_time'])
-             // ->where('date', '=',$c['day_date'] );
+            $check = Queue::where('start_time', '=', $c['period_start_time'])
+              ->where('date', '=',$c['day_date'] )->get();
+            if($check->count() > 0 and $check->count() <= 4){
+            array_push($result,1);}
+            else{
+                array_push($result, 0);
+            }
         }
-        //dd($queue);
+        //dd($result);
 
-        return view('index.index', ['queue' => $queue, 'cur_settings' => $cur_settings]);
+        return view('index.index', ['queue' => $queue, 'cur_settings' => $cur_settings, 'check_array' => $result]);
     }
 
     /**
@@ -72,8 +78,18 @@ class IndexController extends Controller
         //todo Зробити функціонал для оновлення інформації про чергу відносно дня.
         $queueModel = new Queue();
         $queue = $queueModel->all();
-        $cur_settings = Current_setting::all();
-        return Response::json($cur_settings);
+        $res['cur_settings'] = Current_setting::all();
+        $res['res_array'] = array();
+        foreach ($res['cur_settings'] as $c){
+            $check = Queue::where('start_time', '=', $c['period_start_time'])
+                ->where('date', '=',$c['day_date'] )->get();
+            if($check->count() > 0 and $check->count() <= 4){
+                array_push($res['res_array'],1);}
+            else{
+                array_push($res['res_array'], 0);
+            }
+        }
+        return Response::json($res);
 
     }
 

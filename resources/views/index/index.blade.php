@@ -105,12 +105,16 @@
                         </div>
                         <div id="collapse-1" class="panel-collapse collapse in">
                             <div class="panel-body am_time">
-                                @foreach($cur_settings as $cur_set)
+                                @foreach($cur_settings as $key=>$cur_set)
                                 @if($cur_set->period_end_time <= '13:01')
                                 <div class="btn-group btn-group-md btn-in-accordion">
                                     <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
+                                    <a href="#" class="btn second disabled @if (!$check_array[$key]) btn-warning"> Вільно @else btn-danger">Зайнято @endif</a>
+                                    @if (!$check_array[$key])
                                     <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
+                                    @else
+                                    <a href="#" class="btn btn-danger disabled">Замовити</a>
+                                    @endif
                                 </div>
                                 @endif
                                 @endforeach
@@ -171,11 +175,11 @@
                         </div>
                         <div id="collapse-2" class="panel-collapse collapse">
                             <div class="panel-body pm_time">
-                                @foreach($cur_settings as $cur_set)
+                                @foreach($cur_settings as $key => $cur_set)
                                 @if($cur_set->period_end_time >= '13:01')
                                 <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">{{$cur_set->period_start_time}} - {{$cur_set->period_end_time}}</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
+                                    <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
+                                    <a href="#" class="btn btn-warning second disabled">@if (!$check_array[$key]) Вільно @else Зайнято @endif </a>
                                     <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
                                 </div>
                                 @endif
@@ -287,15 +291,30 @@
 <script>
     $(document).ready(function(){
 
+        $(document).on('click', '.fc-today-button', function() {
+            alert('ss');
+            $('#date').val(today);
+            getTimePeriod(cur_date);
+            //alert(today);
+        });
+
         var today = moment().format("YYYY-MM-DD");
         var next_day = moment().add(5,'d').format("YYYY-MM-DD");
         var cur_date = moment().format("YYYY-MM-DD");
         $('#date').val(cur_date);
         lang: 'es';
         var tempVar = "";
+        /**
+         *
+         */
         $('#calendar').fullCalendar({
             defaultDate: date,
-            editable: true,
+            header: {
+                left:'title',
+                center:'',
+                right:  'prev,next'
+            },
+            //editable: true,
             eventLimit: true, // allow "more" link when too many events
             dayClick: function(date, allDay, jsEvent, view) {//todo функції для роботи з івентами(дивись документацію)
                 // change the day's background color just for fun
@@ -320,6 +339,10 @@
             }
         });
 
+        /**
+         *
+         * @param current_date
+         */
         function getTimePeriod(current_date){//todo функція перемалювання розкладу сторінок
             $.ajax({
                 dataType: 'json',
@@ -327,17 +350,25 @@
                 url: '{{ route('queue_day_status') }}',
                 data:{
                     date: $('#date').val(),
-                    _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
+                    _token: '{{csrf_token()}}'
                 }
-            }).done(function(data){
+            }).done(function(data){//Провірити правильність роботи нового скріпта
                 $('.am_time').children().remove();
                 $('.pm_time').children().remove();
-                $.each(data, function(key, val){
-
+                $.each(data.cur_settings, function(key, val){
+                    var but1_val ='';
+                    var but2_val ='';
+                    if(data.res_array[key] != 1){
+                         but1_val = ' btn-warning">Вільно';
+                         but2_val = '<a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="'+val.period_start_time+ '" end-time="'+val.period_end_time+'">Замовити</a>';
+                    }else{
+                         but1_val = ' btn-danger">Зайнято';
+                         but2_val = '<a href="#" class="btn btn-danger disabled">Замовити</a>';
+                    }
             var template =  ' <div class="btn-group btn-group-md btn-in-accordion">'+
                             '<a href="" class="btn btn-default top">'+val.period_start_time.slice(0,-3)+' - '+val.period_end_time.slice(0,-3)+'</a>'+
-                            '<a href="#" class="btn btn-warning second disabled">Вільно</a>'+
-                            '<a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="'+val.period_start_time+ '" end-time="'+val.period_end_time+'">Замовити</a>'+
+                            '<a href="#" class="btn second disabled'+ but1_val+'</a>'+
+                            but2_val+
                             '</div>' ;
                     if(val.period_end_time < "13:01"){
                         $('.am_time').append(template);
@@ -349,6 +380,9 @@
             });
         }
 
+        /**
+         *
+         */
         $(document).on('click', '.reg_but', function(){
             $("#start_time").val($(this).attr('start-time'));
             $("#end_time").val($(this).attr('end-time'));
@@ -372,6 +406,9 @@
         });
 
     });
+    /**
+     *
+     */
     function myFunction() {
         var x = document.getElementById("demo");
         x.innerHTML = Math.floor((Math.random() * 8999) + 1000);
