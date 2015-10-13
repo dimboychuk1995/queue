@@ -213,7 +213,7 @@
                         <div class="form-group">
                             <span id="register_key_val" > </span>
                         </div>
-                        <button type="button" class="btn btn-success btn-lg btn-sbt">Закрити<i class="fa fa-check"></i></button>
+                        <button type="button" class="btn btn-success btn-lg btn-sbt" data-dismiss="modal">Закрити<i class="fa fa-check"></i></button>
                     </div>
                 </div>
             </div>
