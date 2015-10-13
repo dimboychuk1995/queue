@@ -166,7 +166,7 @@
                     <button class="close" type="button" data-dismiss="modal">
                         <i class="fa fa-close"></i>
                     </button>
-                    <h4 class="modal-title">Підтвердження замовлення</h4>
+                    <h4 class="modal-title" data-toggle="modal" data-target="#modal-2">Підтвердження замовлення</h4>
                 </div>
                 <div class="modal-body">
                     <div role="form">
@@ -185,7 +185,7 @@
                         <input type="hidden" id="start_time">
                         <input type="hidden" id="end_time">
                         <input type="hidden" id="date">
-                      <button type="button" class="btn btn-success btn-lg btn-sbt">Підтвердити <i class="fa fa-check"></i></button>
+                      <button type="button" class="btn btn-success btn-lg btn-sbt" data-toggle="modal" href="#modal-2">Підтвердити <i class="fa fa-check"></i></button>
                     </div>
                 </div>
                 <div class="modal-footer"> 
@@ -193,7 +193,29 @@
                 </div>
             </div>  
         </div>
-      </div>   
+      </div>
+
+
+    <div class="modal fade" id="modal-2" tabindex="-1" data-focus-on="input:first">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">
+                        <i class="fa fa-close"></i>
+                    </button>
+                    <h4 class="modal-title">Підтвердження замовлення</h4>
+                </div>
+                <div class="modal-body">
+                    <div role="form">
+                        <div class="form_group">
+                            <p>Зараз ви бачите перед собою чотирьохзначний код, який є вашим ідентифікатором при прийомі</p>
+                        </div>
+                        <button type="button" class="btn btn-success btn-lg btn-sbt">Закрити<i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 <script>
@@ -229,13 +251,13 @@
                 if(date.format() >= today && date.format() <= next_day){
                     if (tempVar == "")
                     {
-                        $(this).css('background-color', '#00F1FF');
+                        $(this).css('background-color', '#FFEFDC');
                         tempVar = this;
                     }
                     else
                     {
                         $(tempVar).css('background-color', 'grey');
-                        $(this).css('background-color', '#00F1FF');
+                        $(this).css('background-color', '#f0ad4e');
 
                         tempVar = this;
 
