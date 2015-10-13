@@ -20,14 +20,15 @@ class IndexController extends Controller
      */
     public function index()
     {
+        $today = Carbon::now()->format('Y-m-d');
         $queueModel = new Queue();
-        $queue = $queueModel->all();
-        $cur_settings = Current_setting::all();
+        $queue = $queueModel->where('date', '=', $today)->get();
+        $cur_settings = Current_setting::where('day_date', '=', $today)->get();
         $result = array();
         foreach ($cur_settings as $c){
             $check = Queue::where('start_time', '=', $c['period_start_time'])
               ->where('date', '=',$c['day_date'] )->get();
-            if($check->count() > 0 and $check->count() <= 4){
+            if($check->count() < 4){
             array_push($result,1);}
             else{
                 array_push($result, 0);
@@ -77,13 +78,14 @@ class IndexController extends Controller
     {
         //todo Зробити функціонал для оновлення інформації про чергу відносно дня.
         $queueModel = new Queue();
-        $queue = $queueModel->all();
-        $res['cur_settings'] = Current_setting::all();
+        $today = $request->input('date');
+        $res['cur_settings'] = Current_setting::where('day_date', '=', $today)->get();
         $res['res_array'] = array();
         foreach ($res['cur_settings'] as $c){
             $check = Queue::where('start_time', '=', $c['period_start_time'])
                 ->where('date', '=',$c['day_date'] )->get();
-            if($check->count() > 0 and $check->count() <= 4){
+
+            if($check->count() < 4){
                 array_push($res['res_array'],1);}
             else{
                 array_push($res['res_array'], 0);

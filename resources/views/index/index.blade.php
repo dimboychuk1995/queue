@@ -109,8 +109,8 @@
                                 @if($cur_set->period_end_time <= '13:01')
                                 <div class="btn-group btn-group-md btn-in-accordion">
                                     <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
-                                    <a href="#" class="btn second disabled @if (!$check_array[$key]) btn-warning"> Вільно @else btn-danger">Зайнято @endif</a>
-                                    @if (!$check_array[$key])
+                                    <a href="#" class="btn second disabled @if ($check_array[$key] == 1) btn-warning"> Вільно @else btn-danger">Зайнято @endif</a>
+                                    @if ($check_array[$key] == 1)
                                     <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
                                     @else
                                     <a href="#" class="btn btn-danger disabled">Замовити</a>
@@ -118,52 +118,6 @@
                                 </div>
                                 @endif
                                 @endforeach
-                                <!--
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">9:20 - 9:40</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
-                                    <a href="#" class="btn btn-warning btn-threes" type="button" data-toggle="modal" data-target="#modal-1">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">9:40 - 10:00</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
-                                    <a href="#" class="btn btn-warning btn-threes" type="button" data-toggle="modal" data-target="#modal-1">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                    <a href="" class="btn btn-default top disabled">10:00 - 10:20</a>
-                    <a href="#" class="btn btn-danger second disabled">Зайнято</a>
-                    <a href="#" class="btn btn-danger disabled">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">10:20 - 10:40</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
-                                    <a href="#" class="btn btn-warning btn-threes" type="button" data-toggle="modal" data-target="#modal-1">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                    <a href="" class="btn btn-default top disabled">10:40 - 11:00</a>
-                    <a href="#" class="btn btn-danger second disabled">Зайнято</a>
-                    <a href="#" class="btn btn-danger disabled">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">11:20 - 11:40</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
-                                    <a href="#" class="btn btn-warning btn-threes" type="button" data-toggle="modal" data-target="#modal-1">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                    <a href="" class="btn btn-default top disabled">11:40 - 12:00</a>
-                    <a href="#" class="btn btn-danger second disabled">Зайнято</a>
-                    <a href="#" class="btn btn-danger disabled">Замовити</a>
-                                </div>
-                                   <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">12:20 - 12:40</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
-                                    <a href="#" class="btn btn-warning btn-threes" type="button" data-toggle="modal" data-target="#modal-1">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                    <a href="" class="btn btn-default top disabled">12:40 - 13:00</a>
-                    <a href="#" class="btn btn-danger second disabled">Зайнято</a>
-                    <a href="#" class="btn btn-danger disabled">Замовити</a>
-                                </div> -->
                             </div>
                         </div>
                     </div>        
@@ -179,57 +133,11 @@
                                 @if($cur_set->period_end_time >= '13:01')
                                 <div class="btn-group btn-group-md btn-in-accordion">
                                     <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
-                                    <a href="#" class="btn btn-warning second disabled">@if (!$check_array[$key]) Вільно @else Зайнято @endif </a>
+                                    <a href="#" class="btn btn-warning second disabled">@if ($check_array[$key] == 1) Вільно @else Зайнято @endif </a>
                                     <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
                                 </div>
                                 @endif
                                 @endforeach
-                                <!--
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                    <a href="" class="btn btn-default top disabled">9:20 - 9:40</a>
-                    <a href="#" class="btn btn-danger second disabled">Зайнято</a>
-                    <a href="#" class="btn btn-danger disabled">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">9:40 - 10:00</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
-                                    <a href="#" class="btn btn-warning btn-threes" type="button" data-toggle="modal" data-target="#modal-1">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                    <a href="" class="btn btn-default top disabled">10:00 - 10:20</a>
-                    <a href="#" class="btn btn-danger second disabled">Зайнято</a>
-                    <a href="#" class="btn btn-danger disabled">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">10:20 - 10:40</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
-                                    <a href="#" class="btn btn-warning btn-threes" type="button" data-toggle="modal" data-target="#modal-1">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                    <a href="" class="btn btn-default top disabled">10:40 - 11:00</a>
-                    <a href="#" class="btn btn-danger second disabled">Зайнято</a>
-                    <a href="#" class="btn btn-danger disabled">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">11:20 - 11:40</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
-                                    <a href="#" class="btn btn-warning btn-threes" type="button" data-toggle="modal" data-target="#modal-1">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                    <a href="" class="btn btn-default top disabled">11:40 - 12:00</a>
-                    <a href="#" class="btn btn-danger second disabled">Зайнято</a>
-                    <a href="#" class="btn btn-danger disabled">Замовити</a>
-                                </div>
-                                   <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">12:20 - 12:40</a>
-                                    <a href="#" class="btn btn-warning second disabled">Вільно</a>
-                                    <a href="#" class="btn btn-warning btn-threes" type="button" data-toggle="modal" data-target="#modal-1">Замовити</a>
-                                </div>
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                    <a href="" class="btn btn-default top disabled">12:40 - 13:00</a>
-                    <a href="#" class="btn btn-danger second disabled">Зайнято</a>
-                    <a href="#" class="btn btn-danger disabled">Замовити</a>
-                                </div> -->
                             </div>
                         </div>
                     </div>        
@@ -334,7 +242,7 @@
                     }
                     cur_date = date.format();
                     $('#date').val(cur_date);
-                    getTimePeriod(cur_date);
+                    getTimePeriod();
                 }
             }
         });
@@ -343,7 +251,7 @@
          *
          * @param current_date
          */
-        function getTimePeriod(current_date){//todo функція перемалювання розкладу сторінок
+        function getTimePeriod(){//todo функція перемалювання розкладу сторінок
             $.ajax({
                 dataType: 'json',
                 method:"POST", //Todo Перевести на метод пост
@@ -358,7 +266,7 @@
                 $.each(data.cur_settings, function(key, val){
                     var but1_val ='';
                     var but2_val ='';
-                    if(data.res_array[key] != 1){
+                    if(data.res_array[key] == 1){
                          but1_val = ' btn-warning">Вільно';
                          but2_val = '<a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="'+val.period_start_time+ '" end-time="'+val.period_end_time+'">Замовити</a>';
                     }else{
@@ -401,6 +309,7 @@
                 }
             }).done(function(msg){
                 alert(msg);
+                getTimePeriod();
                 $('#modal-1').modal('hide');
             });
         });
