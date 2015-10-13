@@ -185,7 +185,7 @@
                         <input type="hidden" id="start_time">
                         <input type="hidden" id="end_time">
                         <input type="hidden" id="date">
-                      <button type="button" class="btn btn-success btn-lg btn-sbt" data-toggle="modal" href="#modal-2">Підтвердити <i class="fa fa-check"></i></button>
+                      <button type="button" class="btn btn-success btn-lg btn-sbt queue_sub_but" data-toggle="modal" href="#modal-2">Підтвердити <i class="fa fa-check"></i></button>
                     </div>
                 </div>
                 <div class="modal-footer"> 
@@ -209,6 +209,9 @@
                     <div role="form">
                         <div class="form_group">
                             <p>Зараз ви бачите перед собою чотирьохзначний код, який є вашим ідентифікатором при прийомі</p>
+                        </div>
+                        <div class="form-group">
+                            <span id="register_key_val" > </span>
                         </div>
                         <button type="button" class="btn btn-success btn-lg btn-sbt">Закрити<i class="fa fa-check"></i></button>
                     </div>
@@ -317,7 +320,7 @@
             $("#start_time").val($(this).attr('start-time'));
             $("#end_time").val($(this).attr('end-time'));
         });
-        $('.btn-sbt').click(function(){
+        $('.queue_sub_but').click(function(){
             $.ajax({
                 method:"POST", //Todo Перевести на метод пост
                 url: '{{ route('queue_create') }}',
@@ -329,10 +332,11 @@
                     date: $('#date').val(),
                     _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
                 }
-            }).done(function(msg){
-                alert(msg);
+            }).done(function(data){
+               //alert(data.register_key);
                 getTimePeriod();
                 $('#modal-1').modal('hide');
+                $('#register_key_val').text(data.register_key);
             });
         });
 

@@ -59,13 +59,22 @@ class IndexController extends Controller
     {
         $cur_date = Carbon::today()->toDateString();
         $cur_date = str_replace('-', '', $cur_date);
-        $rand = rand(0,9999);
-        $cur_date .= $rand;
+        $checked = false;
+        while(!$checked){
+            $rand = rand(0,9999);
+            $cur_date .= $rand;
+            if($queueModel->where('register_key', '=', $cur_date)->get()->count() == 0){
+                $checked = true;
+            }else{
+                $checked = false;
+            }
+
+        }
         $data = $request->all();
         unset($data['_token']);
-        $data['register_key'] = $cur_date;
+        $data['register_key'] = substr($cur_date, -4);
         $queueModel->create($data);
-        var_dump($data);
+        return Response::json($data);
     }
 
     /**
