@@ -23,6 +23,7 @@ class CreateQueuesTable extends Migration
             $table->date('register_date');
             $table->boolean('is_real_queue')->default(false);
             $table->boolean('is_admin_record')->default(false);
+            $table->boolean('is_present')->default(false);
             $table->boolean('is_free')->default(false);
             $table->timestamps();
         });

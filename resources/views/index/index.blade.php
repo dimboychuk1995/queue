@@ -234,7 +234,7 @@
         });
 
         var today = moment().format("YYYY-MM-DD");
-        var next_day = moment().add(5,'d').format("YYYY-MM-DD");
+        var next_day = moment().add(6,'d').format("YYYY-MM-DD");
         var cur_date = moment().format("YYYY-MM-DD");
         $('#date').val(cur_date);
         lang: 'es';
@@ -345,6 +345,24 @@
                 $('#register_key_val').text(data.register_key);
             });
         });
+
+       /* setInterval(function(){
+                $.ajax({
+                    method:"GET", //Todo Перевести на метод пост
+                    url: '{{ route('queue_test') }}',
+                    data:{
+                        date: $('#date').val(),
+                        _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
+                    }
+                }).done(function(data){
+                    if(data ==1){
+                    alert(data.message)}
+                    else{
+                        alert (data);
+                    }
+
+                });
+            }, 10000);*/
 
     });
 </script>
