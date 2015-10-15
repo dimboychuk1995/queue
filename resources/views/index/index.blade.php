@@ -208,10 +208,10 @@
                 <div class="modal-body">
                     <div role="form">
                         <div class="form_group">
-                            <p>Зараз ви бачите перед собою чотирьохзначний код, який є вашим ідентифікатором при прийомі</p>
+                            <p class="informTextOnModal-2">Зараз ви бачите перед собою чотирьохзначний код, який є вашим ідентифікатором при прийомі</p>
                         </div>
                         <div class="form-group">
-                            <span id="register_key_val" > </span>
+                            <span id="register_key_val" class="register_key_val" > </span>
                         </div>
                         <button type="button" class="btn btn-success btn-lg btn-sbt" data-dismiss="modal">Закрити<i class="fa fa-check"></i></button>
                     </div>

@@ -107,5 +107,17 @@
      margin-top: 68px;   
 }
 
+.informTextOnModal-2{
+    text-align: center;
+    font-size: 18px;
+}
+
+.register_key_val{
+    font-size: -webkit-xxx-large;
+    color: #f0ad4e;
+    display: block;
+    text-align: -webkit-center;
+}
+
 
 
