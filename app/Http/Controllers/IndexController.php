@@ -14,9 +14,8 @@ use Carbon\Carbon;
 class IndexController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Головна клієнтська сторінка
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -50,10 +49,12 @@ class IndexController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * запис запису черги періоду в БД
+     * @param Queue $queueModel
+     * @param Current_setting $cur_setting
+     * @param Request $request
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Queue $queueModel, Current_setting $cur_setting, Request $request)
     {
@@ -80,10 +81,12 @@ class IndexController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * отримання списку періодів і стану черги на день
+     * @param Queue $queueModel
+     * @param Current_setting $cur_setting
+     * @param Request $request
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getDay(Queue $queueModel, Current_setting $cur_setting, Request $request)
     {

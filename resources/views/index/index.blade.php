@@ -223,7 +223,9 @@
 </html>
 <script>
     $(document).ready(function(){
-
+/**
+ * тестова функція для кнопки сьогодні
+ */
         $(document).on('click', '.fc-today-button', function() {
             alert('ss');
             $('#date').val(today);
@@ -238,7 +240,7 @@
         lang: 'es';
         var tempVar = "";
         /**
-         *
+         *функція ініціалізації календаря
          */
         $('#calendar').fullCalendar({
             defaultDate: date,
@@ -273,8 +275,8 @@
         });
 
         /**
+         *AJAX для отримання розкладу періодів
          *
-         * @param current_date
          */
         function getTimePeriod(){//todo функція перемалювання розкладу сторінок
             $.ajax({
@@ -288,6 +290,10 @@
             }).done(function(data){//Провірити правильність роботи нового скріпта
                 $('.am_time').children().remove();
                 $('.pm_time').children().remove();
+                if(data.cur_settings.length == 0){
+                    $('.am_time').append('<p>Вихідний день</p>');
+                    $('.pm_time').append('<p>Вихідний день</p>');
+                }
                 $.each(data.cur_settings, function(key, val){
                     var but1_val ='';
                     var but2_val ='';
@@ -314,7 +320,7 @@
         }
 
         /**
-         *
+         *функція запису черги в БД
          */
         $(document).on('click', '.reg_but', function(){
             $("#start_time").val($(this).attr('start-time'));
@@ -333,7 +339,7 @@
                     _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
                 }
             }).done(function(data){
-               console.log(data);
+               //console.log(data);
                 getTimePeriod();
                 $('#modal-1').modal('hide');
                 $('#register_key_val').text(data.register_key);
@@ -341,11 +347,4 @@
         });
 
     });
-    /**
-     *
-     */
-    function myFunction() {
-        var x = document.getElementById("demo");
-        x.innerHTML = Math.floor((Math.random() * 8999) + 1000);
-    }
 </script>
