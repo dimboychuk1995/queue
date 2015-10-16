@@ -384,22 +384,18 @@
                           <p>Введіть прізвище, ім*я, по батькові та особовий рахунок та натисніть кнопку підтвердит</p>
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputEmail1">ПІП</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Прізвище Ім'я По батькові">
+                        <label for="real_queue_name">ПІП</label>
+                        <input type="text" class="form-control" id="real_queue_name" placeholder="Прізвище Ім'я По батькові">
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Особовий рахунок</label>
-                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Особовий рахунок споживача(за бажанням)">
+                        <label for="real_queue_PerNum">Особовий рахунок</label>
+                        <input type="text" class="form-control" id="real_queue_PerNum" placeholder="Особовий рахунок споживача(за бажанням)">
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Час прийому(період)</label>
-                        <input type="text" class="form-control" id="exampleInputPassword2" placeholder="Час прийому(вказувати початок періоду)">
+                        <label for="real_queue_time">Час прийому(період)</label>
+                        <input type="text" class="form-control" id="real_queue_time" placeholder="Час прийому(вказувати початок періоду)">
                       </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Чотирьохзначний код(рандомний)</label>
-                        <input type="text" class="form-control" id="exampleInputPassword3" placeholder="Адміністратор сам надає чотирьохзначний код споживачу, який не реєструвався через інтернет">
-                      </div>
-                      <button type="button" class="btn btn-success btn-lg">Підтвердити <i class="fa fa-check"></i></button>
+                      <button type="button" class="btn btn-success btn-lg add_real_client">Підтвердити <i class="fa fa-check"></i></button>
                     </form>
                 </div>
                 <div class="modal-footer"> 
@@ -599,6 +595,27 @@
           <script src="./lib/bootstrap.js"></script>
           <script>
           $(function(){
+              var today = moment().format("YYYY-MM-DD");
+
+              $('.add_real_client').click(function(){
+                  $.ajax({
+                      method:"POST", //Todo Перевести на метод пост
+                      url: '{{ route('real_queue_create') }}',
+                      data:{
+                          start_time : $("#real_queue_time").val(),
+                          user_name: $('#real_queue_name').val(),
+                          user_personal_key: $('#real_queue_PerNum').val(),
+                          date: today,
+                          _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
+                      }
+                  }).done(function(data){
+                      //console.log(data);
+                      getTimePeriod();
+                      $('#modal-1').modal('hide');
+                      $('#register_key_val').text(data.register_key);
+                  });
+              });
+
             $("#addButton").click(function(){
                 var res = $("#cloneId").clone();
                 res.appendTo(".append");
