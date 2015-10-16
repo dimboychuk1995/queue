@@ -96,54 +96,54 @@
                 <div class="calendar" id='calendar'></div>
             </div>
             <div class="col-xs-5">
-            <div id="accordion" class="panel-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a href="#collapse-1" data-parent="#accordion" data-toggle="collapse">Період з 9 до 13:00</a>
-                            </h4>
-                        </div>
-                        <div id="collapse-1" class="panel-collapse collapse in">
-                            <div class="panel-body am_time">
-                                @foreach($cur_settings as $key=>$cur_set)
-                                @if($cur_set->period_end_time <= '13:01')
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
-                                    <a href="#" class="btn second disabled @if ($check_array[$key] == 1) btn-warning"> Вільно @else btn-danger">Зайнято @endif</a>
-                                    @if ($check_array[$key] == 1)
-                                    <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
-                                    @else
-                                    <a href="#" class="btn btn-danger disabled">Замовити</a>
+                <div id="accordion" class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#collapse-1" data-parent="#accordion" data-toggle="collapse">Період з 9 до 13:00</a>
+                                </h4>
+                            </div>
+                            <div id="collapse-1" class="panel-collapse collapse in">
+                                <div class="panel-body am_time">
+                                    @foreach($cur_settings as $key=>$cur_set)
+                                    @if($cur_set->period_end_time <= '13:01')
+                                    <div class="btn-group btn-group-md btn-in-accordion">
+                                        <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
+                                        <a href="#" class="btn second disabled @if ($check_array[$key] == 1) btn-warning"> Вільно @else btn-danger">Зайнято @endif</a>
+                                        @if ($check_array[$key] == 1)
+                                        <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
+                                        @else
+                                        <a href="#" class="btn btn-danger disabled">Замовити</a>
+                                        @endif
+                                    </div>
                                     @endif
+                                    @endforeach
                                 </div>
-                                @endif
-                                @endforeach
                             </div>
                         </div>
-                    </div>        
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a href="#collapse-2" data-parent="#accordion" data-toggle="collapse">Період з 13:00</a>
-                            </h4>
-                        </div>
-                        <div id="collapse-2" class="panel-collapse collapse">
-                            <div class="panel-body pm_time">
-                                @foreach($cur_settings as $key => $cur_set)
-                                @if($cur_set->period_end_time >= '13:01')
-                                <div class="btn-group btn-group-md btn-in-accordion">
-                                    <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
-                                    <a href="#" class="btn btn-warning second disabled">@if ($check_array[$key] == 1) Вільно @else Зайнято @endif </a>
-                                    <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="#collapse-2" data-parent="#accordion" data-toggle="collapse">Період з 13:00</a>
+                                </h4>
+                            </div>
+                            <div id="collapse-2" class="panel-collapse collapse">
+                                <div class="panel-body pm_time">
+                                    @foreach($cur_settings as $key => $cur_set)
+                                    @if($cur_set->period_end_time >= '13:01')
+                                    <div class="btn-group btn-group-md btn-in-accordion">
+                                        <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
+                                        <a href="#" class="btn btn-warning second disabled">@if ($check_array[$key] == 1) Вільно @else Зайнято @endif </a>
+                                        <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
+                                    </div>
+                                    @endif
+                                    @endforeach
                                 </div>
-                                @endif
-                                @endforeach
                             </div>
                         </div>
-                    </div>        
                 </div>
-        </div>  
-    </div>
+            </div>
+        </div>
     </div>
     
     <div class="container footer">

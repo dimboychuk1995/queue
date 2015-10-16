@@ -61,6 +61,111 @@
         </div>
 
         <div class="row">
+            <div class="col-xs-5 col-xs-offset-7">
+                <div id="accordion" class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a href="#collapse-1" data-parent="#accordion" data-toggle="collapse">Період з 9 до 13:00</a>
+                            </h4>
+                        </div>
+                        <div id="collapse-1" class="panel-collapse collapse in">
+                            <div class="panel-body am_time">
+                                <div class="btn-group btn-group-md">
+                                        <a href="" class="btn btn-default periodOnAdminPage first">10:00 - 10:20</a>
+                                        <div class="btn-group">
+                                            <a href="#" class="btn btn-warning periodOnAdminPage btnRegister" data-toggle="dropdown">Вільно <i class="fa fa-angle-right"></i></a>
+                                            <ul class="dropdown-menu dropdownMenuForAdmin" role="menu">
+                                                <li><a href="#">Вася Пупкін 3356</a></li>
+                                                <li><a href="#">Тест Тест 4567</a></li>
+                                                <li><a href="#">Тест Пупкін 4567</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#" data-toggle="modal" data-target="#modal-4">Зареєструвати з живої черги</a></li>
+                                            </ul>
+                                        </div>
+                                </div><br>
+                                <div class="btn-group btn-group-md">
+                                    <a href="" class="btn btn-default periodOnAdminPage first">10:00 - 10:20</a>
+                                    <div class="btn-group">
+                                        <a href="#" class="btn btn-warning periodOnAdminPage btnRegister" data-toggle="dropdown">Вільно <i class="fa fa-angle-right"></i></a>
+                                        <ul class="dropdown-menu dropdownMenuForAdmin" role="menu">
+                                            <li><a href="#">Вася Пупкін 3356</a></li>
+                                            <li><a href="#">Тест Тест 4567</a></li>
+                                            <li><a href="#">Тест Пупкін 4567</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#modal-4">Зареєструвати з живої черги</a></li>
+                                        </ul>
+                                    </div>
+                                </div><br>
+                                <div class="btn-group btn-group-md">
+                                    <a href="" class="btn btn-default periodOnAdminPage first">10:00 - 10:20</a>
+                                    <div class="btn-group">
+                                        <a href="#" class="btn btn-warning periodOnAdminPage btnRegister" data-toggle="dropdown">Вільно <i class="fa fa-angle-right"></i></a>
+                                        <ul class="dropdown-menu dropdownMenuForAdmin" role="menu">
+                                            <li><a href="#">Вася Пупкін 3356</a></li>
+                                            <li><a href="#">Тест Тест 4567</a></li>
+                                            <li><a href="#">Тест Пупкін 4567</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#modal-4">Зареєструвати з живої черги</a></li>
+                                        </ul>
+                                    </div>
+                                </div><br>
+                                <div class="btn-group btn-group-md">
+                                    <a href="" class="btn btn-default periodOnAdminPage first">10:00 - 10:20</a>
+                                    <div class="btn-group">
+                                        <a href="#" class="btn btn-warning periodOnAdminPage btnRegister" data-toggle="dropdown">Вільно <i class="fa fa-angle-right"></i></a>
+                                        <ul class="dropdown-menu dropdownMenuForAdmin" role="menu">
+                                            <li><a href="#">Вася Пупкін 3356</a></li>
+                                            <li><a href="#">Тест Тест 4567</a></li>
+                                            <li><a href="#">Тест Пупкін 4567</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#modal-4">Зареєструвати з живої черги</a></li>
+                                        </ul>
+                                    </div>
+                                </div><br>
+                                <div class="btn-group btn-group-md">
+                                    <a href="" class="btn btn-default periodOnAdminPage first">10:00 - 10:20</a>
+                                    <div class="btn-group">
+                                        <a href="#" class="btn btn-warning periodOnAdminPage btnRegister btnEmployed" data-toggle="dropdown">Зайнято <i class="fa fa-angle-right"></i></a>
+                                        <ul class="dropdown-menu dropdownMenuForAdmin" role="menu">
+                                            <li>на даний момент всі диспетчера</li>
+                                            <li>зайняті, список зареєстрованих:</li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Вася Пупкін 3356</a></li>
+                                            <li><a href="#">Тест Тест 4567</a></li>
+                                            <li><a href="#">Тест Пупкін 4567</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#modal-4">Зареєструвати з живої черги</a></li>
+                                        </ul>
+                                    </div>
+                                </div><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a href="#collapse-2" data-parent="#accordion" data-toggle="collapse">Період з 13:00</a>
+                            </h4>
+                        </div>
+                        <div id="collapse-2" class="panel-collapse collapse">
+                            <div class="panel-body pm_time">
+                                <div class="btn-group btn-group-md">
+                                    <a href="" class="btn btn-default periodOnAdminPage">8:00</a>
+                                    <a href="#" class="btn btn-warning periodOnAdminPage">Вільно</a>
+                                </div>
+                                <div class="btn-group btn-group-md">
+                                    <a href="" class="btn btn-default periodOnAdminPage">8:00</a>
+                                    <a href="#" class="btn btn-warning periodOnAdminPage">Вільно</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="row">
             <div class="col-xs-12">
                 <table class="table table-striped table-hover mainTable">
                     <tr>
@@ -155,7 +260,7 @@
                     </tr>
                 </table>
             </div>
-        </div>
+        </div> -->
         <br>
         <div class="row">
             <div class="col-lg-6">
@@ -624,3 +729,5 @@
           </script>
   </body>
 </html>
+
+

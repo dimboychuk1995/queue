@@ -224,3 +224,23 @@ a.spoiler.collapsed:before{
 .viewHour{
     padding-top: 10px;
 }
+
+.dropdownMenuForAdmin{
+    margin: -34px 0px 0px 100px;
+}
+
+.periodOnAdminPage{
+    width: 100px;
+}
+
+.btnEmployed{
+     background-color: #d9534f;
+}
+
+.btnEmployed:visited{
+    background-color: #d9534f;
+}
+
+.first{
+    padding-left: 7px;
+}
