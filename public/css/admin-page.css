@@ -244,3 +244,24 @@ a.spoiler.collapsed:before{
 .first{
     padding-left: 7px;
 }
+
+.rowInTable1{
+    text-align: -webkit-center;
+}
+
+.contentInTable1{
+    padding-top: 16px;
+}
+
+.table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 10px;
+    vertical-align: inherit;
+}
+
+.formAddFromLive{
+    margin-top: 50px;
+}
+
+.formCaption{
+    text-align: center;
+}
