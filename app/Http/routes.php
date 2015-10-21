@@ -18,5 +18,6 @@ post('/queue_create', ['as' => 'queue_create', 'uses' => 'IndexController@store'
 post('/real_queue_create', ['as' => 'real_queue_create', 'uses' => 'AdminController@store']);
 post('/queue_confirm', ['as' => 'queue_confirm', 'uses' => 'AdminController@update']);
 post('/queue_day_status', ['as' => 'queue_day_status', 'uses' => 'IndexController@getDay']);
+post('/admin_queue_day_status', ['as' => 'admin_queue_day_status', 'uses' => 'AdminController@getDay']);
 get('/queue_test', ['as' => 'queue_test', 'uses' => 'IndexController@create']);
 //$router->resource('post', 'IndexController');

@@ -94,7 +94,7 @@
                 </form>
             </div>
             <div class="col-xs-7">
-                <table class="table table-striped table-hover mainTable">
+                <table id="main_queue_table" class="table table-striped table-hover mainTable">
                     <caption>Гібридна таблиця</caption>
                     <tr>
                         <th>Період</th>
@@ -104,7 +104,6 @@
                         <th>Додати</th>
                     </tr>
                     @foreach ($periods as $key=>$period)
-
 
                             <tr class="rowInTable1">
                                 <td rowspan="{{$period['count']}}" class="contentInTable1" id="periodOnTable1">{{substr($period['period_start_time'] ,0, -3)}} - {{substr($period['period_end_time'], 0, -3)}}</td>
@@ -124,61 +123,7 @@
                                     </tr>
                           @endforeach
                     @endforeach
-                   <!-- <tr class="rowInTable1">
-                        <td class="contentInTable1">Test Test Test</td>
-                        <td class="contentInTable1">1101</td>
-                        <td class="contentInTable1">5569882234</td>
-                        <td class="contentInTable1 btnConfirm"><a href="#" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>
-                    <tr class="rowInTable1">
-                        <td class="contentInTable1">Test Test Test</td>
-                        <td class="contentInTable1">1101</td>
-                        <td class="contentInTable1">5569882234</td>
-                        <td class="contentInTable1 btnConfirm"><a href="#" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>
-                    <tr class="rowInTable1">
-                        <td class="contentInTable1">Test Test Test</td>
-                        <td class="contentInTable1">1101</td>
-                        <td class="contentInTable1">5569882234</td>
-                        <td class="contentInTable1 btnConfirm"><a href="#" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>
-                    <tr class="rowInTable1">
-                        <td class="contentInTable1">Test Test Test</td>
-                        <td class="contentInTable1">1101</td>
-                        <td class="contentInTable1">5569882234</td>
-                        <td class="contentInTable1 btnConfirm"><a href="#" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>
-                    <tr class="rowInTable1">
-                        <td rowspan="5" class="contentInTable1" id="">8:20 - 8:40</td>
-                        <td class="contentInTable1">Test Test Test</td>
-                        <td class="contentInTable1">1101</td>
-                        <td class="contentInTable1">5569882234</td>
-                        <td class="contentInTable1 btnConfirm"><a href="#" id="" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>
-                    <tr class="rowInTable1">
-                        <td class="contentInTable1">Test Test Test</td>
-                        <td class="contentInTable1">1101</td>
-                        <td class="contentInTable1">5569882234</td>
-                        <td class="contentInTable1 btnConfirm"><a href="#" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>
-                    <tr class="rowInTable1">
-                        <td class="contentInTable1">Test Test Test</td>
-                        <td class="contentInTable1">1101</td>
-                        <td class="contentInTable1">5569882234</td>
-                        <td class="contentInTable1 btnConfirm"><a href="#" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>
-                    <tr class="rowInTable1">
-                        <td class="contentInTable1">Test Test Test</td>
-                        <td class="contentInTable1">1101</td>
-                        <td class="contentInTable1">5569882234</td>
-                        <td class="contentInTable1 btnConfirm"><a href="#" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>
-                    <tr class="rowInTable1">
-                        <td class="contentInTable1">Test Test Test</td>
-                        <td class="contentInTable1">1101</td>
-                        <td class="contentInTable1">5569882234</td>
-                        <td class="contentInTable1 btnConfirm"><a href="#" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>-->
+
                 </table>
             </div>
         </div>
@@ -866,6 +811,58 @@
                       }).done(function(data){//change labels and disable button
                       $this.text("Присутній");
                           $this.attr('disabled', true);
+                      });
+
+              });
+              $('#dataToday').change(function(){//confirm present
+                  $.ajax({//send data
+                          dataType: 'json',
+                          method:"POST", //Todo Перевести на метод пост
+                          url: '{{ route('admin_queue_day_status') }}',
+                          data:{
+                              date : $(this).val(),
+                              _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
+                          }
+                      }).done(function(data){//change labels and disable button
+                      console.log(data);
+                     var res = '<caption>Гібридна таблиця</caption>'+
+                         '<tr>'+
+                              '<th>Період</th>'+
+                              '<th>ПІП</th>'+
+                              '<th>Код</th>'+
+                              '<th>Особовий</th>'+
+                              '<th>Додати</th>'+
+                          '</tr> ';
+                       $.each(data, function( key, period){
+
+                             res =  res + '<tr class="rowInTable1">'+
+                              '<td rowspan="'+period.count+'" class="contentInTable1" id="periodOnTable1">'+period.period_start_time.slice(0,-3)+ '-'+ period.period_end_time.slice(0,-3)+'</td>';
+                           if(period.queue.length == 0){
+                                   res= res+ '</tr>';
+
+                            }else{
+                                $.each(period.queue, function(k, que){
+
+                                      if (k != 0){
+                                          res = res +  '<tr class="rowInTable1">';
+                                      }
+                                         res = res + '<td class="contentInTable1">'+que.user_name+'</td>'+
+                                              '<td class="contentInTable1">'+que.register_key.slice(4)+'</td>'+
+                                              '<td class="contentInTable1">'+que.user_personal_key+'</td>';
+                                      if(que.is_real_queue){
+                                             res = res + '<td class="contentInTable1 btnConfirm"><p>З живої черги</p></td>';
+                                      }else{
+                                              res = res + '<td class="contentInTable1 btnConfirm"><a href="#" data-id="'+que.id+'" class="btn btn-warning reg_confirm_but"';
+                                               if(que.is_present){ res = res + ' disabled >Присутній'; }else{res = res + '>Відмітити'; }
+                                      res = res + '</a></td>';
+                                      }
+                                      res = res + '</tr>';
+                                });
+                            }
+                       });
+$('#main_queue_table').children().remove();
+$('#main_queue_table').append(res);
+
                       });
 
               });

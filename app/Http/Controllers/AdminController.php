@@ -53,6 +53,31 @@ class AdminController extends Controller
         //
     }
 
+    /**отримання списку періодів і стану черги на день
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDay(Request $request)
+    {
+        $date = $request->input('date');
+        $queueModel = new Queue();
+        $queue = $queueModel->where('date', '=', $date)->get();
+        $cur_settings = Current_setting::where('day_date', '=', $date)->get();
+        $periods = array();
+        foreach ($cur_settings as $c){
+
+            $check = Queue::where('start_time', '=', $c['period_start_time'])
+                ->where('date', '=',$c['day_date'] )->get();
+            $period['period_start_time'] =  $c['period_start_time'];
+            $period['period_end_time'] =  $c['period_end_time'];
+            $period['queue'] =  $check;
+            $period['count'] =  $check->count();
+            array_push($periods, $period);
+        }
+        return Response::json($periods);
+
+    }
     /**
      * Store a newly created resource in storage.
      *
