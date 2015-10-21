@@ -12,7 +12,10 @@ class Queue extends Model
         'register_key',
         'user_name',
         'user_personal_key',
-        'register_date');
+        'is_present',
+        'is_real_queue',
+        'is_admin_record'
+    );
     public function setQueue($param){
 
     }

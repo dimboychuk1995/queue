@@ -65,33 +65,30 @@
                 <h4 class="formCaption">Форма для додавання споживачів з живої черги</h4>
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label for="" class="col-sm-5 control-label">ПІП</label>
+                        <label for="real_queue_form_name" class="col-sm-5 control-label">ПІП</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="" placeholder="ПІП">
+                            <input type="text" class="form-control" id="real_queue_form_name" placeholder="ПІП">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="col-sm-5 control-label">Особовий рахунок</label>
+                        <label for="real_queue_form_per_num" class="col-sm-5 control-label">Особовий рахунок</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="" placeholder="Особовий">
+                            <input type="text" class="form-control" id="real_queue_form_per_num" placeholder="Особовий">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="" class="col-sm-5 control-label">Період</label>
                         <div class="col-sm-7">
-                            <select class="form-control">
-                                <option>8:00</option>
-                                <option>8:20</option>
-                                <option>8:40</option>
-                                <option>9:00</option>
-                                <option>9:20</option>
-                                <option>9:40</option>
+                            <select id="real_queue_form_time" class="form-control">
+                                @foreach ($cur_settings as $key => $cur_set)
+                                <option value="{{substr($cur_set->period_start_time, 0, -3)}}">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-warning">Підтвердити</button>
+                            <button  id="real_queue_form_sub_but" class="btn btn-warning">Підтвердити</button>
                         </div>
                     </div>
                 </form>
@@ -106,14 +103,28 @@
                         <th>Особовий</th>
                         <th>Додати</th>
                     </tr>
-                    <tr class="rowInTable1">
-                        <td rowspan="5" class="contentInTable1" id="periodOnTable1">8:00 - 8:20</td>
-                        <td class="contentInTable1">Test Test Test</td>
-                        <td class="contentInTable1">1101</td>
-                        <td class="contentInTable1">5569882234</td>
-                        <td class="contentInTable1 btnConfirm"><a href="#" id="confirmConsumer" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>
-                    <tr class="rowInTable1">
+                    @foreach ($periods as $key=>$period)
+
+
+                            <tr class="rowInTable1">
+                                <td rowspan="{{$period['count']}}" class="contentInTable1" id="periodOnTable1">{{substr($period['period_start_time'] ,0, -3)}} - {{substr($period['period_end_time'], 0, -3)}}</td>
+
+                          @foreach ($period['queue'] as $k => $que)
+                                @if ($k != 0)
+                                    <tr class="rowInTable1">
+                                @endif
+                                        <td class="contentInTable1">{{$que->user_name}}</td>
+                                        <td class="contentInTable1">{{substr($que->register_key,-4)}}</td>
+                                        <td class="contentInTable1">{{$que->user_personal_key}}</td>
+                                @if($que->is_real_queue)
+                                        <td class="contentInTable1 btnConfirm"><p>З живої черги</p></td>
+                                @else
+                                        <td class="contentInTable1 btnConfirm"><a href="#" data-id="{{$que->id}}" class="btn btn-warning reg_confirm_but" @if($que->is_present) disabled >Присутній @else >Відмітити @endif</a></td>
+                                @endif
+                                    </tr>
+                          @endforeach
+                    @endforeach
+                   <!-- <tr class="rowInTable1">
                         <td class="contentInTable1">Test Test Test</td>
                         <td class="contentInTable1">1101</td>
                         <td class="contentInTable1">5569882234</td>
@@ -167,7 +178,7 @@
                         <td class="contentInTable1">1101</td>
                         <td class="contentInTable1">5569882234</td>
                         <td class="contentInTable1 btnConfirm"><a href="#" onclick="confirmConsumer()" data-toggle="modal" data-target="#modal-5" class="btn btn-warning">Додати</a></td>
-                    </tr>
+                    </tr>-->
                 </table>
             </div>
         </div>
@@ -610,7 +621,7 @@
                       </div>
                       <div class="form-group">
                         <label for="real_queue_time">Час прийому(період)</label>
-                        <input type="text" class="form-control" id="real_queue_time" placeholder="Час прийому(вказувати початок періоду)">
+                        <input type="text" class="form-control" id="real_queue_time" placeholder="Зразок 13:00">
                       </div>
                       <button type="button" class="btn btn-success btn-lg add_real_client">Підтвердити <i class="fa fa-check"></i></button>
                     </form>
@@ -811,27 +822,52 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
           <script src="./lib/bootstrap.js"></script>
+          <script src='./lib/moment.min.js'></script>
           <script>
           $(function(){
-              var today = moment().format("YYYY-MM-DD");
+              var today = $('#dataToday').val();//today default date
+              /**
+               *
+               */
+              $('#real_queue_form_sub_but').click(function(){//is any input empty
+                  if( $("#real_queue_form_time").val() != '' &&  $("#real_queue_form_name").val() != '' &&  $("#real_queue_form_per_num").val() != ''){
+                      $.ajax({//send data
+                          method:"POST", //Todo Перевести на метод пост
+                          url: '{{ route('real_queue_create') }}',
+                          data:{
+                              start_time : $("#real_queue_form_time").val(),
+                              user_name: $('#real_queue_form_name').val(),
+                              user_personal_key: $('#real_queue_form_per_num').val(),
+                              date: today,
+                              _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
+                          }//get response
+                      }).done(function(data){
+                          //console.log(data);
+                          $('#modal-1').modal('show');
+                      });
+                  }
+                  else{
+                      $('#modal-3').modal('show');
+                  }
+              });
 
-              $('.add_real_client').click(function(){
-                  $.ajax({
-                      method:"POST", //Todo Перевести на метод пост
-                      url: '{{ route('real_queue_create') }}',
-                      data:{
-                          start_time : $("#real_queue_time").val(),
-                          user_name: $('#real_queue_name').val(),
-                          user_personal_key: $('#real_queue_PerNum').val(),
-                          date: today,
-                          _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
-                      }
-                  }).done(function(data){
-                      //console.log(data);
-                      getTimePeriod();
-                      $('#modal-1').modal('hide');
-                      $('#register_key_val').text(data.register_key);
-                  });
+              /**
+               *
+               */
+              $('.reg_confirm_but').click(function(){//confirm present
+                  var $this = $(this);//save selector
+                  $.ajax({//send data
+                          method:"POST", //Todo Перевести на метод пост
+                          url: '{{ route('queue_confirm') }}',
+                          data:{
+                              id : $(this).attr('data-id'),
+                              _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
+                          }
+                      }).done(function(data){//change labels and disable button
+                      $this.text("Присутній");
+                          $this.attr('disabled', true);
+                      });
+
               });
 
             $("#addButton").click(function(){
@@ -848,5 +884,4 @@
         </script>
   </body>
 </html>
-
 

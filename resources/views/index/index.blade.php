@@ -345,24 +345,26 @@
                 $('#register_key_val').text(data.register_key);
             });
         });
+/*
+//функція алерту по часу
+        var test_today = moment();
+        var now = moment();
+        test_today = test_today.hour(12);
+        test_today=  test_today.minute(45);
+        var before_date = moment(test_today);
+        before_date = before_date.add('-20','minutes');
 
-       /* setInterval(function(){
-                $.ajax({
-                    method:"GET", //Todo Перевести на метод пост
-                    url: '{{ route('queue_test') }}',
-                    data:{
-                        date: $('#date').val(),
-                        _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
-                    }
-                }).done(function(data){
-                    if(data ==1){
-                    alert(data.message)}
-                    else{
-                        alert (data);
-                    }
+        if (now.isBetween(before_date, test_today)){
+            alert('База перезагрузиться в '+test_today.format('YYYY-MM-DD h:mm '));
+        }
 
-                });
-            }, 10000);*/
-
+        setInterval(function(){
+            var now = moment();
+            if (now.isBetween(before_date, test_today)){
+                alert('База перезагрузиться в '+test_today.format('YYYY-MM-DD h:mm '));
+            }
+            }, 300000);
+        //кінець
+*/
     });
 </script>

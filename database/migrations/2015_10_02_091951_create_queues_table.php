@@ -20,7 +20,7 @@ class CreateQueuesTable extends Migration
             $table->bigInteger('register_key')->unique();
             $table->string('user_name', 60)->nullable();
             $table->integer('user_personal_key')->nullable();
-            $table->date('register_date');
+            $table->boolean('is_present')->default(false);
             $table->boolean('is_real_queue')->default(false);
             $table->boolean('is_admin_record')->default(false);
             $table->boolean('is_present')->default(false);
