@@ -484,7 +484,10 @@
                                               <option>нестандартне налаштування 1()</option>
                                         </select>
                                         <br>
-                                        <div class="btn btn-success btn-xs">Зберегти стандартні налаштування для даної дати</div>
+                                        <div class="btn btn-success btn-xs" data-target="#modal-5" data-toggle="modal">Зберегти стандартні налаштування для даної дати</div>
+                                    </div>
+                                    <div class="col-xs-6 col-xs-offset-6 btnAddTypeSettings">
+                                        <div class="btn btn-success" data-target="#modal-6" data-toggle="modal">Додати типові налаштування</div>
                                     </div>
                                  </div>
                             </form>
@@ -509,41 +512,41 @@
 
     </div>
 
-          <div class="modal fade add-new" id="modal-4">
-              <div class="modal-dialog  modal-lg">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <button class="close" type="button" data-dismiss="modal">
-                              <i class="fa fa-close"></i>
-                          </button>
-                          <h4 class="modal-title">Введіть дані споживача</h4>
-                      </div>
-                      <div class="modal-body">
-                          <form role="form">
-                              <div class="form_group">
-                                  <p>Введіть прізвище, ім*я, по батькові та особовий рахунок та натисніть кнопку підтвердит</p>
-                              </div>
-                              <div class="form-group">
-                                  <label for="exampleInputEmail1">ПІП</label>
-                                  <input type="email" class="form-control"  placeholder="Прізвище Ім'я По батькові">
-                              </div>
-                              <div class="form-group">
-                                  <label for="exampleInputPassword1">Особовий рахунок</label>
-                                  <input type="text" class="form-control"  placeholder="Особовий рахунок споживача(за бажанням)">
-                              </div>
-                              <div class="form-group">
-                                  <label for="exampleInputPassword1">Чотирьохзначний код(рандомний)</label>
-                                  <input type="text" class="form-control" placeholder="Адміністратор сам надає чотирьохзначний код споживачу, який не реєструвався через інтернет">
-                              </div>
-                              <button type="button" class="btn btn-success btn-lg">Підтвердити <i class="fa fa-check"></i></button>
-                          </form>
-                      </div>
-                      <div class="modal-footer">
-                          <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
+          <!--<div class="modal fade add-new" id="modal-4">-->
+              <!--<div class="modal-dialog  modal-lg">-->
+                  <!--<div class="modal-content">-->
+                      <!--<div class="modal-header">-->
+                          <!--<button class="close" type="button" data-dismiss="modal">-->
+                              <!--<i class="fa fa-close"></i>-->
+                          <!--</button>-->
+                          <!--<h4 class="modal-title">Введіть дані споживача</h4>-->
+                      <!--</div>-->
+                      <!--<div class="modal-body">-->
+                          <!--<form role="form">-->
+                              <!--<div class="form_group">-->
+                                  <!--<p>Введіть прізвище, ім*я, по батькові та особовий рахунок та натисніть кнопку підтвердит</p>-->
+                              <!--</div>-->
+                              <!--<div class="form-group">-->
+                                  <!--<label for="exampleInputEmail1">ПІП</label>-->
+                                  <!--<input type="email" class="form-control"  placeholder="Прізвище Ім'я По батькові">-->
+                              <!--</div>-->
+                              <!--<div class="form-group">-->
+                                  <!--<label for="exampleInputPassword1">Особовий рахунок</label>-->
+                                  <!--<input type="text" class="form-control"  placeholder="Особовий рахунок споживача(за бажанням)">-->
+                              <!--</div>-->
+                              <!--<div class="form-group">-->
+                                  <!--<label for="exampleInputPassword1">Чотирьохзначний код(рандомний)</label>-->
+                                  <!--<input type="text" class="form-control" placeholder="Адміністратор сам надає чотирьохзначний код споживачу, який не реєструвався через інтернет">-->
+                              <!--</div>-->
+                              <!--<button type="button" class="btn btn-success btn-lg">Підтвердити <i class="fa fa-check"></i></button>-->
+                          <!--</form>-->
+                      <!--</div>-->
+                      <!--<div class="modal-footer">-->
+                          <!--<button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити</button>-->
+                      <!--</div>-->
+                  <!--</div>-->
+              <!--</div>-->
+          <!--</div>-->
 
       <div class="modal fade add-new" id="modal-1">
         <div class="modal-dialog  modal-lg">
@@ -562,144 +565,162 @@
             </div>  
         </div>
       </div>
+
+          <div class="modal fade add-new" id="modal-5">
+              <div class="modal-dialog  modal-lg">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button class="close" type="button" data-dismiss="modal">
+                              <i class="fa fa-close"></i>
+                          </button>
+                          <h4 class="modal-title">Ви впевнені, що бажаєте підтвердити дані типові налаштування для вибраної дати?</h4>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-success btn-lg add_real_client" id="successSettingBySelectDate">Підтвердити <i class="fa fa-check"></i></button>
+
+                          <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
       
-      <div class="modal fade add-new-from-online" id="modal-2">
-        <div class="modal-dialog  modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal">
-                        <i class="fa fa-close"></i>
-                    </button>
-                    <h4 class="modal-title">Виберіть споживача зі списку або скористайтесь пошуком</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid search">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <p>Пошук за номером</p>
-                                <div class="search-content">
-                                    <input type="text" class="form-control"  placeholder="Введіть номер користувача">
-                                    <button class="btn btn-warning btn-search-in-modal">Пошук</button>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <p>Пошук за прізвищем</p>
-                                <div class="search-content">
-                                    <input type="text" class="form-control" id="" placeholder="Введіть ПІП користувача">
-                                    <button class="btn btn-warning btn-search-in-modal">Пошук</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <table class="table table-striped table-hover">
-                        <caption>Інтернет черга</caption>
-                        <tr>
-                            <th>№</th>
-                            <th>ПІП</th>
-                            <th>Особовий рахунок</th>
-                            <th>Код для консультації</th>
-                            <th>Година на яку зареєстрований</th>
-                            <th>Enabled</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Тест Тест Тест(І1)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>9:00</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Тест Тест Тест(І2)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>9:20</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Тест Тест Тест(І3)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>9:40</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Тест Тест Тест(І4)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>10:00</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Тест Тест Тест(І5)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>10:20</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Тест Тест Тест(І6)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>10:40</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Тест Тест Тест(І7)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>10:20</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>Тест Тест Тест(І8)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>10:40</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>Тест Тест Тест(І9)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>10:40</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>Тест Тест Тест(І10)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>10:20</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>Тест Тест Тест(І11)</td>
-                            <td>123455978</td>
-                            <td>1234</td>
-                            <td>10:40</td>
-                            <td class="enabled"><input type="checkbox"></td>
-                        </tr>
-                    </table>
-                    
-                    <button type="button" class="btn btn-success btn-lg">Підтвердити <i class="fa fa-check"></i></button>
-                    
-                </div>
-                <div class="modal-footer"> 
-                    <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити</button>
-                </div>
-            </div>  
-        </div>
-      </div>
+      <!--<div class="modal fade add-new-from-online" id="modal-2">-->
+        <!--<div class="modal-dialog  modal-lg">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<button class="close" type="button" data-dismiss="modal">-->
+                        <!--<i class="fa fa-close"></i>-->
+                    <!--</button>-->
+                    <!--<h4 class="modal-title">Виберіть споживача зі списку або скористайтесь пошуком</h4>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<div class="container-fluid search">-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-lg-6">-->
+                                <!--<p>Пошук за номером</p>-->
+                                <!--<div class="search-content">-->
+                                    <!--<input type="text" class="form-control"  placeholder="Введіть номер користувача">-->
+                                    <!--<button class="btn btn-warning btn-search-in-modal">Пошук</button>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-6">-->
+                                <!--<p>Пошук за прізвищем</p>-->
+                                <!--<div class="search-content">-->
+                                    <!--<input type="text" class="form-control" id="" placeholder="Введіть ПІП користувача">-->
+                                    <!--<button class="btn btn-warning btn-search-in-modal">Пошук</button>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<table class="table table-striped table-hover">-->
+                        <!--<caption>Інтернет черга</caption>-->
+                        <!--<tr>-->
+                            <!--<th>№</th>-->
+                            <!--<th>ПІП</th>-->
+                            <!--<th>Особовий рахунок</th>-->
+                            <!--<th>Код для консультації</th>-->
+                            <!--<th>Година на яку зареєстрований</th>-->
+                            <!--<th>Enabled</th>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>1</td>-->
+                            <!--<td>Тест Тест Тест(І1)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>9:00</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>2</td>-->
+                            <!--<td>Тест Тест Тест(І2)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>9:20</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>3</td>-->
+                            <!--<td>Тест Тест Тест(І3)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>9:40</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>4</td>-->
+                            <!--<td>Тест Тест Тест(І4)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>10:00</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>5</td>-->
+                            <!--<td>Тест Тест Тест(І5)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>10:20</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>6</td>-->
+                            <!--<td>Тест Тест Тест(І6)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>10:40</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>7</td>-->
+                            <!--<td>Тест Тест Тест(І7)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>10:20</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>8</td>-->
+                            <!--<td>Тест Тест Тест(І8)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>10:40</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>9</td>-->
+                            <!--<td>Тест Тест Тест(І9)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>10:40</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>10</td>-->
+                            <!--<td>Тест Тест Тест(І10)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>10:20</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>11</td>-->
+                            <!--<td>Тест Тест Тест(І11)</td>-->
+                            <!--<td>123455978</td>-->
+                            <!--<td>1234</td>-->
+                            <!--<td>10:40</td>-->
+                            <!--<td class="enabled"><input type="checkbox"></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                    <!-- -->
+                    <!--<button type="button" class="btn btn-success btn-lg">Підтвердити <i class="fa fa-check"></i></button>-->
+                    <!-- -->
+                <!--</div>-->
+                <!--<div class="modal-footer"> -->
+                    <!--<button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити</button>-->
+                <!--</div>-->
+            <!--</div>  -->
+        <!--</div>-->
+      <!--</div>-->
       <div class="modal fade" id="modal-3">
         <div class="modal-dialog  modal-lg modalAddPeriod">
             <div class="modal-content">
@@ -747,6 +768,59 @@
             </div>  
         </div>
       </div>
+
+
+          <div class="modal fade" id="modal-6">
+              <div class="modal-dialog  modal-lg modalAddPeriod">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button class="close" type="button" data-dismiss="modal">
+                              <i class="fa fa-close"></i>
+                          </button>
+                          <h4 class="modal-title">Редагування налаштувань прийому громадян для вказної дати</h4>
+                      </div>
+                      <div class="modal-body">
+                          <form role="form">
+                              <div class="form-group">
+                                  <label for="timeFrom">Назва налаштування</label>
+                                  <input type="text" class="time-from form-control" id="nameSetting" placeholder="Назва типового налаштування">
+                              </div>
+                              <div class="form-group">
+                                  <label for="timeFrom">Час початку робочого дня</label>
+                                  <input type="text" class="time-from form-control timeOnModal-3" id="timeFromSec" placeholder="Час початку робочого дня">
+                              </div>
+                              <br>
+                              <div class="form-group">
+                                  <label for="timeTo">Час закінчення робочого дня</label>
+                                  <input type="text" class="time-to form-control timeOnModal-3" id="timeToSec" placeholder="Час закінчення робочого дня">
+                              </div>
+                              <div class="row append">
+                                  <div class="col-xs-4">
+                                      <button id="addButtonSec" type="button" class="btn btn-success btn-lg btnAddPeriod">Додати період <i class="fa fa-plus"></i></button>
+                                  </div>
+                                  <div class="col-xs-6">
+
+                                  </div>
+                              </div>
+                              <hr>
+
+                              <div id="cloneIdSec" class="form-group period">
+                                  <label id="periodSec">Період з    </label>
+                                  <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="periodFromSec" placeholder="">
+                                  <label id="period2Sec">по</label>
+                                  <input type="text" class="time-from form-control periodOnModal-3" id="periodToSec" placeholder="">
+                                  <label for="countOperator">Кількість операторів</label>
+                                  <input type="text" class="form-control countOperatorOnModal-3" id="countOperatorSec" placeholder="">
+                              </div>
+                          </form>
+                      </div>
+                      <button type="button" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
+                      <div class="modal-footer">
+                          <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити редагування</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

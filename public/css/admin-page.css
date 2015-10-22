@@ -274,3 +274,7 @@ a.spoiler.collapsed:before{
 .add_real_client{
     display: -webkit-box;
 }
+
+.btnAddTypeSettings{
+    margin-top: 5px;
+}
