@@ -63,7 +63,7 @@
         <div class="row">
             <div class="col-xs-5 formAddFromLive">
                 <h4 class="formCaption">Форма для додавання споживачів з живої черги</h4>
-                <form class="form-horizontal" role="form">
+                <div class="form-horizontal" role="form">
                     <div class="form-group">
                         <label for="real_queue_form_name" class="col-sm-5 control-label">ПІП</label>
                         <div class="col-sm-7">
@@ -94,7 +94,7 @@
                             <label id="labelClear">Заповніть будь-ласка обов*язкові поля</label>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="col-xs-7">
                 <table id="main_queue_table" class="table table-striped table-hover mainTable">
