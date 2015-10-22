@@ -48,9 +48,9 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function set_default_setting(Request $request)
     {
-        //
+
     }
 
     /**отримання списку періодів і стану черги на день

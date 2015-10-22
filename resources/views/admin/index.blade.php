@@ -759,7 +759,7 @@
               /**
                *
                */
-              $('#real_queue_form_sub_but').click(function(){//is any input empty
+              $(document).on('click', '#real_queue_form_sub_but', function(){//is any input empty
                   if( $("#real_queue_form_time").val() != '' &&  $("#real_queue_form_name").val() != '' &&  $("#real_queue_form_per_num").val() != ''){
                       $('#modal-1').modal('show');
                   }
@@ -767,7 +767,12 @@
                       $("#labelClear").show();
                   }
               });
-              $('#real_queue_submit').click(function(){//is any input empty
+
+              /**
+               *
+               *
+               */
+              $(document).on('click', '#real_queue_submit', function(){
                   $.ajax({//send data
                       method:"POST", //Todo Перевести на метод пост
                       url: '{{ route('real_queue_create') }}',
@@ -787,7 +792,7 @@
               /**
                *
                */
-              $('.reg_confirm_but').click(function(){//confirm present
+              $(document).on('click', '.reg_confirm_but', function(){ //confirm present
                   var $this = $(this);//save selector
                   $.ajax({//send data
                           method:"POST", //Todo Перевести на метод пост
@@ -813,6 +818,7 @@
                           }
                       }).done(function(data){//change labels and disable button
                       console.log(data);
+                      var period_res = '';
                      var res = '<caption>Гібридна таблиця</caption>'+
                          '<tr>'+
                               '<th>Період</th>'+
@@ -822,7 +828,7 @@
                               '<th>Додати</th>'+
                           '</tr> ';
                        $.each(data, function( key, period){
-
+                      period_res = period_res +'<option value="'+ period.period_start_time.slice(0,-3)+'">'+period.period_start_time.slice(0,-3)+ '-'+ period.period_end_time.slice(0,-3)+'</option>';
                              res =  res + '<tr class="rowInTable1">'+
                               '<td rowspan="'+period.count+'" class="contentInTable1" id="periodOnTable1">'+period.period_start_time.slice(0,-3)+ '-'+ period.period_end_time.slice(0,-3)+'</td>';
                            if(period.queue.length == 0){
@@ -848,11 +854,12 @@
                                 });
                             }
                        });
-$('#main_queue_table').children().remove();
-$('#main_queue_table').append(res);
 
+                            $('#main_queue_table').children().remove();
+                            $('#real_queue_form_time').children().remove();
+                            $('#main_queue_table').append(res);
+                            $('#real_queue_form_time').append(period_res);
                       });
-
               });
 
             $("#addButton").click(function(){
