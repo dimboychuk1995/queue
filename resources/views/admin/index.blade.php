@@ -555,7 +555,8 @@
                     <h4 class="modal-title">Занести нового споживача?</h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success btn-lg add_real_client">Підтвердити <i class="fa fa-check"></i></button>
+                    <button type="button" class="btn btn-success btn-lg add_real_client" id="real_queue_submit">Підтвердити <i class="fa fa-check"></i></button>
+
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити</button>
                 </div>
             </div>  
@@ -760,24 +761,27 @@
                */
               $('#real_queue_form_sub_but').click(function(){//is any input empty
                   if( $("#real_queue_form_time").val() != '' &&  $("#real_queue_form_name").val() != '' &&  $("#real_queue_form_per_num").val() != ''){
-                      $.ajax({//send data
-                          method:"POST", //Todo Перевести на метод пост
-                          url: '{{ route('real_queue_create') }}',
-                          data:{
-                              start_time : $("#real_queue_form_time").val(),
-                              user_name: $('#real_queue_form_name').val(),
-                              user_personal_key: $('#real_queue_form_per_num').val(),
-                              date: today,
-                              _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
-                          }//get response
-                      }).done(function(data){
-                          //console.log(data);
-                          $('#modal-1').modal('show');
-                      });
+                      $('#modal-1').modal('show');
                   }
                   else{
                       $("#labelClear").show();
                   }
+              });
+              $('#real_queue_submit').click(function(){//is any input empty
+                  $.ajax({//send data
+                      method:"POST", //Todo Перевести на метод пост
+                      url: '{{ route('real_queue_create') }}',
+                      data:{
+                          start_time : $("#real_queue_form_time").val(),
+                          user_name: $('#real_queue_form_name').val(),
+                          user_personal_key: $('#real_queue_form_per_num').val(),
+                          date: today,
+                          _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
+                      }//get response
+                  }).done(function(data){
+                      //console.log(data);
+                      $('#modal-1').modal('hide');
+                  });
               });
 
               /**
