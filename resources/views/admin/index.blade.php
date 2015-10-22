@@ -87,8 +87,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
+                        <div class="col-sm-offset-2 col-sm-5">
                             <button  id="real_queue_form_sub_but" class="btn btn-warning">Підтвердити</button>
+                        </div>
+                        <div class="col-sm-5">
+                            <label id="labelClear">Заповніть будь-ласка обов*язкові поля</label>
                         </div>
                     </div>
                 </form>
@@ -549,25 +552,10 @@
                     <button class="close" type="button" data-dismiss="modal">
                         <i class="fa fa-close"></i>
                     </button>
-                    <h4 class="modal-title">Введіть дані споживача</h4>
+                    <h4 class="modal-title">Занести нового споживача?</h4>
                 </div>
                 <div class="modal-body">
                     <form role="form">
-                      <div class="form_group">
-                          <p>Введіть прізвище, ім*я, по батькові та особовий рахунок та натисніть кнопку підтвердит</p>
-                      </div>
-                      <div class="form-group">
-                        <label for="real_queue_name">ПІП</label>
-                        <input type="text" class="form-control" id="real_queue_name" placeholder="Прізвище Ім'я По батькові">
-                      </div>
-                      <div class="form-group">
-                        <label for="real_queue_PerNum">Особовий рахунок</label>
-                        <input type="text" class="form-control" id="real_queue_PerNum" placeholder="Особовий рахунок споживача(за бажанням)">
-                      </div>
-                      <div class="form-group">
-                        <label for="real_queue_time">Час прийому(період)</label>
-                        <input type="text" class="form-control" id="real_queue_time" placeholder="Зразок 13:00">
-                      </div>
                       <button type="button" class="btn btn-success btn-lg add_real_client">Підтвердити <i class="fa fa-check"></i></button>
                     </form>
                 </div>
@@ -792,7 +780,7 @@
                       });
                   }
                   else{
-                      $('#modal-3').modal('show');
+                      $("#labelClear").show();
                   }
               });
 
