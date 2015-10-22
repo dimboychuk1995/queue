@@ -473,18 +473,14 @@
                                     </div>
                                     <div class="col-xs-6">
                                         <h5>Ви можете вибрати налаштування зі списку стандартних</h5> 
-                                        <select class="form-control">
-                                              <option value="">не вибрано</option>
-                                              <option>Понеділок</option>
-                                              <option>Вівторок</option>
-                                              <option>Середа</option>
-                                              <option>Четвер</option>
-                                              <option>П*ятниця</option>
-                                              <option>Субота</option>
-                                              <option>нестандартне налаштування 1()</option>
+                                        <select class="form-control" id="default_setting_list">
+                                            <option value="">не вибрано</option>
+                                            @foreach($def_set_name as $key => $val)
+                                              <option value="{{$val->id}}">{{$val->day_name}}</option>
+                                        @endforeach
                                         </select>
                                         <br>
-                                        <div class="btn btn-success btn-xs" data-target="#modal-5" data-toggle="modal">Зберегти стандартні налаштування для даної дати</div>
+                                        <div class="btn btn-success btn-xs" id="set_default_settings">Зберегти стандартні налаштування для даної дати</div>
                                     </div>
                                     <div class="col-xs-6 col-xs-offset-6 btnAddTypeSettings">
                                         <div class="btn btn-success" data-target="#modal-6" data-toggle="modal">Додати типові налаштування</div>
@@ -574,6 +570,9 @@
                               <i class="fa fa-close"></i>
                           </button>
                           <h4 class="modal-title">Ви впевнені, що бажаєте підтвердити дані типові налаштування для вибраної дати?</h4>
+                      </div>
+                      <div class="modal-body">
+
                       </div>
                       <div class="modal-footer">
                           <button type="button" class="btn btn-success btn-lg add_real_client" id="successSettingBySelectDate">Підтвердити <i class="fa fa-check"></i></button>
@@ -936,6 +935,27 @@
                       });
               });
 
+              $(document).on('click', '#set_default_settings', function(){
+                  if( $("#default_setting_list").val() != ''){
+                      $('#modal-5').modal('show');
+                  }
+                  else{
+                      alert('Виберіть налаштування зі списку');
+                  }
+              });
+              $(document).on('click', '#successSettingBySelectDate', function(){
+                  $.ajax({//send data
+                      method:"POST", //Todo Перевести на метод пост
+                      url: '{{ route('admin_queue_set_default_setting') }}',
+                      data:{
+                          id : $("#default_setting_list").val(),
+                          date:$("#dataToday-2").val(),
+                          _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
+                      }
+                  }).done(function(data){//change labels and disable button
+                      $('#modal-5').modal('hide');
+                  });
+              });
             $("#addButton").click(function(){
                 var res = $("#cloneId").clone();
                 res.appendTo(".append");

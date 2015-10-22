@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Default_day;
+use App\Default_setting;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -23,6 +25,7 @@ class AdminController extends Controller
         $queueModel = new Queue();
         $queue = $queueModel->where('date', '=', $today)->get();
         $cur_settings = Current_setting::where('day_date', '=', $today)->get();
+        $default_settings_name_list = Default_day::all();
         $check_count = array();
         $periods = array();
         foreach ($cur_settings as $c){
@@ -40,7 +43,7 @@ class AdminController extends Controller
             }
             array_push($periods, $period);
         }
-        return view('admin.index', ['cur_settings' => $cur_settings, 'queue' => $queue, 'periods' => $periods]);
+        return view('admin.index', ['cur_settings' => $cur_settings, 'queue' => $queue, 'periods' => $periods, 'def_set_name' => $default_settings_name_list]);
     }
 
     /**
@@ -50,6 +53,17 @@ class AdminController extends Controller
      */
     public function set_default_setting(Request $request)
     {
+        $date = $request->input('date');
+        $day_id = $request->input('id');
+        $settings = Default_setting::where('day_id', '=', $day_id)->orderBy('start_time', 'asc')->get(array('start_time as period_start_time', 'end_time as period_end_time', 'workers_number as workers_number', 'period_time as period_time'));
+        $settings = $settings->toArray();
+       // dd($settings);
+        foreach($settings as $key => $val){
+            Current_setting::updateOrCreate(
+                ['day_date' => $date, 'period_start_time' => $val['period_start_time'], 'period_end_time' => $val['period_end_time'], 'workers_number' => $val['workers_number'],'period_time' => $val['period_time']],
+                ['day_date' => $date, 'period_start_time' => $val['period_start_time'], 'period_end_time' => $val['period_end_time'], 'workers_number' => $val['workers_number'],'period_time' => $val['period_time']]
+            );
+        }
 
     }
 
