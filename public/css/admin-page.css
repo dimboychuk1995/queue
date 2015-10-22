@@ -270,3 +270,7 @@ a.spoiler.collapsed:before{
     color: #cd0a0a;
     display: none;
 }
+
+.add_real_client{
+    display: -webkit-box;
+}

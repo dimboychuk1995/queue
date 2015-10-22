@@ -554,12 +554,8 @@
                     </button>
                     <h4 class="modal-title">Занести нового споживача?</h4>
                 </div>
-                <div class="modal-body">
-                    <form role="form">
-                      <button type="button" class="btn btn-success btn-lg add_real_client">Підтвердити <i class="fa fa-check"></i></button>
-                    </form>
-                </div>
-                <div class="modal-footer"> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success btn-lg add_real_client">Підтвердити <i class="fa fa-check"></i></button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити</button>
                 </div>
             </div>  
