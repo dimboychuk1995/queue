@@ -150,7 +150,7 @@ a.spoiler.collapsed:before{
 }
 
 .modalAddPeriod{
-   width: 580px;
+   width: 700px;
 }
 
 .btnAddPeriod{
@@ -277,4 +277,12 @@ a.spoiler.collapsed:before{
 
 .btnAddTypeSettings{
     margin-top: 5px;
+}
+
+.btnSaveOnModal6{
+    margin-left: 17px;
+}
+
+.btnSaveOnModal3{
+    margin-left: 17px;
 }

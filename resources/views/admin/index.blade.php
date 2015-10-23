@@ -732,25 +732,16 @@
                 </div>
                 <div class="modal-body">
                     <form role="form">
-                      <div class="form-group">
+                      <div class="form-group timeOnModal-3">
                           <label for="timeFrom">Час початку робочого дня</label>
-                          <input type="text" class="time-from form-control timeOnModal-3" id="timeFrom" placeholder="Час початку робочого дня">               
+                          <h3 id="timeFrom">8:00</h3>
                       </div>
                         <br>
-                      <div class="form-group">
+                      <div class="form-group timeOnModal-3">
                           <label for="timeTo">Час закінчення робочого дня</label>
-                          <input type="text" class="time-to form-control timeOnModal-3" id="timeTo" placeholder="Час закінчення робочого дня">
+                          <h3 id="timeTo">17:00</h3>
                       </div>
-                      <div class="row append">
-                          <div class="col-xs-4">
-                            <button id="addButton" type="button" class="btn btn-success btn-lg btnAddPeriod">Додати період <i class="fa fa-plus"></i></button>
-                           </div>
-                          <div class="col-xs-6">
-                            
-                          </div>
-                      </div>
-                      <hr>  
-                        
+                      <hr>
                       <div id="cloneId" class="form-group period"> 
                           <label id="period">Період з    </label>
                           <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="periodFrom" placeholder="">
@@ -758,7 +749,14 @@
                           <input type="text" class="time-from form-control periodOnModal-3" id="periodTo" placeholder="">
                           <label for="countOperator">Кількість операторів</label>
                           <input type="text" class="form-control countOperatorOnModal-3" id="countOperator" placeholder="">
+                          <button type="button" class="btn btn-success btn-md btnSaveOnModal3">Зберегти</button>
                       </div>
+
+                        <div class="row append">
+                            <div class="col-xs-4 col-xs-offset-8">
+                                <button id="addButton" type="button" class="btn btn-success btn-lg btnAddPeriod">Додати період <i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
                     </form>
                 </div>
                     <button type="button" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
@@ -785,25 +783,7 @@
                                   <label for="timeFrom">Назва налаштування</label>
                                   <input type="text" class="time-from form-control" id="nameSetting" placeholder="Назва типового налаштування">
                               </div>
-                              <div class="form-group">
-                                  <label for="timeFrom">Час початку робочого дня</label>
-                                  <input type="text" class="time-from form-control timeOnModal-3" id="timeFromSec" placeholder="Час початку робочого дня">
-                              </div>
-                              <br>
-                              <div class="form-group">
-                                  <label for="timeTo">Час закінчення робочого дня</label>
-                                  <input type="text" class="time-to form-control timeOnModal-3" id="timeToSec" placeholder="Час закінчення робочого дня">
-                              </div>
-                              <div class="row append">
-                                  <div class="col-xs-4">
-                                      <button id="addButtonSec" type="button" class="btn btn-success btn-lg btnAddPeriod">Додати період <i class="fa fa-plus"></i></button>
-                                  </div>
-                                  <div class="col-xs-6">
-
-                                  </div>
-                              </div>
                               <hr>
-
                               <div id="cloneIdSec" class="form-group period">
                                   <label id="periodSec">Період з    </label>
                                   <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="periodFromSec" placeholder="">
@@ -811,6 +791,12 @@
                                   <input type="text" class="time-from form-control periodOnModal-3" id="periodToSec" placeholder="">
                                   <label for="countOperator">Кількість операторів</label>
                                   <input type="text" class="form-control countOperatorOnModal-3" id="countOperatorSec" placeholder="">
+                                  <button type="button" class="btn btn-success btn-md btnSaveOnModal6">Зберегти</button>
+                              </div>
+                              <div class="row append">
+                                  <div class="col-xs-4 col-xs-offset-8">
+                                      <button id="addButtonSec" type="button" class="btn btn-success btn-lg btnAddPeriod">Додати період <i class="fa fa-plus"></i></button>
+                                  </div>
                               </div>
                           </form>
                       </div>
