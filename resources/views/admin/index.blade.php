@@ -731,7 +731,7 @@
                     <h4 class="modal-title">Редагування налаштувань прийому громадян для вказної дати</h4>
                 </div>
                 <div class="modal-body">
-                    <form role="form">
+                    <div role="form">
                       <div class="form-group timeOnModal-3">
                           <label for="timeFrom">Час початку робочого дня</label>
                           <h3 id="timeFrom">8:00</h3>
@@ -742,7 +742,13 @@
                           <h3 id="timeTo">17:00</h3>
                       </div>
                       <hr>
-                      <div id="cloneId" class="form-group period"> 
+                        <div class="row append">
+                            <div class="col-xs-4 col-xs-offset-8">
+                                <button id="addButton" type="button" class="btn btn-success btn-lg btnAddPeriod">Додати період <i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                        </div>
+                      <div id="cloneId" class="form-group period">
                           <label id="period">Період з    </label>
                           <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="periodFrom" placeholder="">
                           <label id="period2">по</label>
@@ -751,16 +757,11 @@
                           <input type="text" class="form-control countOperatorOnModal-3" id="countOperator" placeholder="">
                           <button type="button" class="btn btn-success btn-md btnSaveOnModal3">Зберегти</button>
                       </div>
-
-                        <div class="row append">
-                            <div class="col-xs-4 col-xs-offset-8">
-                                <button id="addButton" type="button" class="btn btn-success btn-lg btnAddPeriod">Додати період <i class="fa fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
-                <div class="modal-footer"> 
+
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити редагування</button>
                 </div>
             </div>  
@@ -778,12 +779,17 @@
                           <h4 class="modal-title">Редагування налаштувань прийому громадян для вказної дати</h4>
                       </div>
                       <div class="modal-body">
-                          <form role="form">
+                          <div role="form">
                               <div class="form-group">
                                   <label for="timeFrom">Назва налаштування</label>
                                   <input type="text" class="time-from form-control" id="nameSetting" placeholder="Назва типового налаштування">
                               </div>
                               <hr>
+                              <div class="row append">
+                                  <div class="col-xs-4 col-xs-offset-8">
+                                      <button id="addButtonSec" type="button" class="btn btn-success btn-lg btnAddPeriod">Додати період <i class="fa fa-plus"></i></button>
+                                  </div>
+                              </div>
                               <div id="cloneIdSec" class="form-group period">
                                   <label id="periodSec">Період з    </label>
                                   <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="periodFromSec" placeholder="">
@@ -793,15 +799,10 @@
                                   <input type="text" class="form-control countOperatorOnModal-3" id="countOperatorSec" placeholder="">
                                   <button type="button" class="btn btn-success btn-md btnSaveOnModal6">Зберегти</button>
                               </div>
-                              <div class="row append">
-                                  <div class="col-xs-4 col-xs-offset-8">
-                                      <button id="addButtonSec" type="button" class="btn btn-success btn-lg btnAddPeriod">Додати період <i class="fa fa-plus"></i></button>
-                                  </div>
-                              </div>
-                          </form>
+                          </div>
                       </div>
-                      <button type="button" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
                       <div class="modal-footer">
+                          <button type="button" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
                           <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити редагування</button>
                       </div>
                   </div>

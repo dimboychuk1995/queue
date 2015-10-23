@@ -145,16 +145,16 @@ a.spoiler.collapsed:before{
     margin-bottom: 5px;   
 }
 
-.btn-successOnModal-3{
-        margin: 0 0 24px 34px;   
-}
+
+
 
 .modalAddPeriod{
    width: 700px;
 }
 
 .btnAddPeriod{
-    margin-left: 16px   
+    margin-left: 16px;
+    margin-bottom: 10px;
 }
 
 .obl-info{
