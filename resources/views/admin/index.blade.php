@@ -80,6 +80,7 @@
                         <label for="" class="col-sm-5 control-label">Період</label>
                         <div class="col-sm-7">
                             <select id="real_queue_form_time" class="form-control">
+                                <option value="">Виберіть період</option>
                                 @foreach ($cur_settings as $key => $cur_set)
                                 <option value="{{substr($cur_set->period_start_time, 0, -3)}}">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</option>
                                 @endforeach
@@ -108,12 +109,12 @@
                     </tr>
                     @foreach ($periods as $key=>$period)
 
-                            <tr class="rowInTable1">
+                            <tr class="rowInTable1 queue_period" data-value="{{substr($period['period_start_time'] ,0, -3)}}">
                                 <td rowspan="{{$period['count']}}" class="contentInTable1" id="periodOnTable1">{{substr($period['period_start_time'] ,0, -3)}} - {{substr($period['period_end_time'], 0, -3)}}</td>
 
                           @foreach ($period['queue'] as $k => $que)
                                 @if ($k != 0)
-                                    <tr class="rowInTable1">
+                                    <tr class="rowInTable1 queue_period" data-value="{{substr($period['period_start_time'] ,0, -3)}}">
                                 @endif
                                         <td class="contentInTable1">{{$que->user_name}}</td>
                                         <td class="contentInTable1">{{substr($que->register_key,-4)}}</td>
@@ -829,11 +830,13 @@
           <script>
           $(function(){
               var today = $('#dataToday').val();//today default date
+              //hide extra periods
+              hidePeriods();
               /**
                *
                */
               $(document).on('click', '#real_queue_form_sub_but', function(){//is any input empty
-                  if( $("#real_queue_form_time").val() != '' &&  $("#real_queue_form_name").val() != '' &&  $("#real_queue_form_per_num").val() != ''){
+                  if( $("#real_queue_form_time").val() != '' &&  $("#real_queue_form_name").val() != ''){
                       $('#modal-1').modal('show');
                   }
                   else{
@@ -846,18 +849,25 @@
                *
                */
               $(document).on('click', '#real_queue_submit', function(){
+                  var end_period = moment();
+                  end_period = end_period.hour($("#real_queue_form_time").val().slice(0,2));
+                  end_period = end_period.minutes($("#real_queue_form_time").val().slice(3));
+                  end_period = end_period.add($("#real_queue_form_time").val().slice(3), 'minutes');
+
                   $.ajax({//send data
                       method:"POST", //Todo Перевести на метод пост
                       url: '{{ route('real_queue_create') }}',
                       data:{
                           start_time : $("#real_queue_form_time").val(),
+                          end_time : end_period.format('HH:mm'),
                           user_name: $('#real_queue_form_name').val(),
                           user_personal_key: $('#real_queue_form_per_num').val(),
                           date: today,
                           _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
                       }//get response
                   }).done(function(data){
-                      //console.log(data);
+                      console.log(data);
+
                       $('#modal-1').modal('hide');
                   });
               });
@@ -932,6 +942,7 @@
                             $('#real_queue_form_time').children().remove();
                             $('#main_queue_table').append(res);
                             $('#real_queue_form_time').append(period_res);
+                            hidePeriods();
                       });
               });
 
@@ -957,17 +968,34 @@
                   });
               });
             $("#addButton").click(function(){
+
+                hidePeriods();
                 var res = $("#cloneId").clone();
                 res.appendTo(".append");
             });
+
+              setInterval(function(){
+                  hidePeriods();
+              }, 300000);
+
+              function hidePeriods(){
+                  var cur_time = moment();
+                  cur_time = cur_time.add('-20','minutes');
+
+                  $('#real_queue_form_time').children().each(function(){
+                      if($(this).val() < cur_time.format('HH:mm')){
+                          $(this).hide();
+                      }
+                  });
+                  $('.queue_period').each(function(){
+                      if($(this).attr('data-value') < cur_time.format('HH:mm')){
+                          $(this).hide();
+                      }
+                  });
+              }
+
           });
           </script>
-
-        <script type="text/javascript">
-            function confirmConsumer(){
-                alert("success");
-            }
-        </script>
   </body>
 </html>
 
