@@ -120,7 +120,7 @@
                                         <td class="contentInTable1">{{substr($que->register_key,-4)}}</td>
                                         <td class="contentInTable1">{{$que->user_personal_key}}</td>
                                 @if($que->is_real_queue)
-                                        <td class="contentInTable1 btnConfirm"><p>З живої черги</p></td>
+                                        <td class="contentInTable1 btnConfirm"><a href="#" data-id="{{$que->id}}" class="btn btn-warning reg_confirm_but" @if($que->is_present) disabled >Присутній @else>Відмітити(жива черга) @endif</a></td>
                                 @else
                                         <td class="contentInTable1 btnConfirm"><a href="#" data-id="{{$que->id}}" class="btn btn-warning reg_confirm_but" @if($que->is_present) disabled >Присутній @else >Відмітити @endif</a></td>
                                 @endif
@@ -748,7 +748,7 @@
                             </div>
                         </div>
                         </div>
-                      <div id="cloneId" class="form-group period">
+                      <div id="" class="form-group period cloneId">
                           <label id="period">Період з    </label>
                           <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="periodFrom" placeholder="">
                           <label id="period2">по</label>
@@ -785,24 +785,24 @@
                                   <input type="text" class="time-from form-control" id="nameSetting" placeholder="Назва типового налаштування">
                               </div>
                               <hr>
-                              <div class="row append">
+                              <div class="row appendSec">
                                   <div class="col-xs-4 col-xs-offset-8">
                                       <button id="addButtonSec" type="button" class="btn btn-success btn-lg btnAddPeriod">Додати період <i class="fa fa-plus"></i></button>
                                   </div>
                               </div>
-                              <div id="cloneIdSec" class="form-group period">
+                              <div id="" class="form-group period cloneIdSec">
                                   <label id="periodSec">Період з    </label>
                                   <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="periodFromSec" placeholder="">
                                   <label id="period2Sec">по</label>
                                   <input type="text" class="time-from form-control periodOnModal-3" id="periodToSec" placeholder="">
                                   <label for="countOperator">Кількість операторів</label>
                                   <input type="text" class="form-control countOperatorOnModal-3" id="countOperatorSec" placeholder="">
-                                  <button type="button" class="btn btn-success btn-md btnSaveOnModal6">Зберегти</button>
+                                  <button type="button" class="btn btn-success btn-md btnSaveOnModal6">Видалити</button>
                               </div>
                           </div>
                       </div>
                       <div class="modal-footer">
-                          <button type="button" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
+                          <button type="button" id="create_def_setting" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
                           <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити редагування</button>
                       </div>
                   </div>
@@ -815,6 +815,9 @@
           <script src="./lib/bootstrap.js"></script>
           <script src='./lib/moment.min.js'></script>
           <script>
+              /**
+               *
+               */
           $(function(){
               var today = $('#dataToday').val();//today default date
               //hide extra periods
@@ -853,9 +856,10 @@
                           _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
                       }//get response
                   }).done(function(data){
-                      console.log(data);
-
                       $('#modal-1').modal('hide');
+                      location.reload();
+
+
                   });
               });
 
@@ -877,6 +881,9 @@
                       });
 
               });
+              /**
+               *
+               */
               $('#dataToday').change(function(){//confirm present
                   $.ajax({//send data
                           dataType: 'json',
@@ -914,7 +921,7 @@
                                               '<td class="contentInTable1">'+que.register_key.slice(4)+'</td>'+
                                               '<td class="contentInTable1">'+que.user_personal_key+'</td>';
                                       if(que.is_real_queue){
-                                             res = res + '<td class="contentInTable1 btnConfirm"><p>З живої черги</p></td>';
+                                             res = res + '<td class="contentInTable1 btnConfirm"><a href="#" data-id="'+que.id+'" class="btn btn-warning reg_confirm_but">Відмітити(жива черга)</a></td>';
                                       }else{
                                               res = res + '<td class="contentInTable1 btnConfirm"><a href="#" data-id="'+que.id+'" class="btn btn-warning reg_confirm_but"';
                                                if(que.is_present){ res = res + ' disabled >Присутній'; }else{res = res + '>Відмітити'; }
@@ -932,7 +939,9 @@
                             hidePeriods();
                       });
               });
-
+            /**
+             *
+             */
               $(document).on('click', '#set_default_settings', function(){
                   if( $("#default_setting_list").val() != ''){
                       $('#modal-5').modal('show');
@@ -941,6 +950,9 @@
                       alert('Виберіть налаштування зі списку');
                   }
               });
+              /**
+               *
+               */
               $(document).on('click', '#successSettingBySelectDate', function(){
                   $.ajax({//send data
                       method:"POST", //Todo Перевести на метод пост
@@ -954,17 +966,50 @@
                       $('#modal-5').modal('hide');
                   });
               });
-            $("#addButton").click(function(){
 
-                hidePeriods();
-                var res = $("#cloneId").clone();
+              /**
+               *
+               */
+            $("#addButton").click(function(){
+                var res = $(".cloneId:last").clone();
                 res.appendTo(".append");
             });
+              /**
+               *
+               */
+              $("#addButtonSec").click(function(){
+                var res = $(".cloneIdSec:last").clone();
+                res.appendTo(".appendSec");
+            });
+              /**
+               *
+               */
+              $(document).on('click', '.btnSaveOnModal6', function(){
+                 $(this).parent().remove();
+              });
 
+              /**
+               *Обробник для збереження стандартних налаштувань
+               */
+              $('#create_def_setting').click(function(){
+
+                  $('.cloneIdSec :input').each(function(){
+                      if($(this).val() == '' && !$(this).is('button')){//todo зробити функціонал збору даних з рядкыв в один масив
+                          alert('заповніть всі періоди'+$(this));
+                      }else{
+                          console.log($(this));
+                      }
+                  });
+              });
+              /**
+               *
+               */
               setInterval(function(){
                   hidePeriods();
               }, 300000);
-
+              /**
+               *
+               */
               function hidePeriods(){
                   var cur_time = moment();
                   cur_time = cur_time.add('-20','minutes');

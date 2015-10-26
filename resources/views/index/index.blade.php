@@ -107,8 +107,8 @@
                                 <div class="panel-body am_time">
                                     @foreach($cur_settings as $key=>$cur_set)
                                     @if($cur_set->period_end_time <= '13:01')
-                                    <div class="btn-group btn-group-md btn-in-accordion">
-                                        <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
+                                    <div class="btn-group btn-group-md btn-in-accordion queue_period" data-value="{{substr($cur_set->period_start_time, 0, -3)}}">
+                                        <a href="" class="btn btn-default top disabled">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
                                         <a href="#" class="btn second disabled @if ($check_array[$key] == 1) btn-warning"> Вільно @else btn-danger">Зайнято @endif</a>
                                         @if ($check_array[$key] == 1)
                                         <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
@@ -131,8 +131,8 @@
                                 <div class="panel-body pm_time">
                                     @foreach($cur_settings as $key => $cur_set)
                                     @if($cur_set->period_end_time >= '13:01')
-                                    <div class="btn-group btn-group-md btn-in-accordion">
-                                        <a href="" class="btn btn-default top">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
+                                    <div class="btn-group btn-group-md btn-in-accordion queue_period" data-value="{{substr($cur_set->period_start_time, 0, -3)}}">
+                                        <a href="" class="btn btn-default top disabled">{{substr($cur_set->period_start_time, 0, -3)}} - {{substr($cur_set->period_end_time, 0, -3)}}</a>
                                         <a href="#" class="btn btn-warning second disabled">@if ($check_array[$key] == 1) Вільно @else Зайнято @endif </a>
                                         <a href="#" class="btn btn-warning btn-threes reg_but" type="button" data-toggle="modal" data-target="#modal-1" start-time="{{$cur_set->period_start_time}}" end-time="{{$cur_set->period_end_time}}">Замовити</a>
                                     </div>
@@ -254,6 +254,9 @@
             dayClick: function(date, allDay, jsEvent, view) {//todo функції для роботи з івентами(дивись документацію)
                 // change the day's background color just for fun
                 if(date.format() >= today && date.format() <= next_day){
+                    if(date.format() == today){
+                        location.reload();
+                    }
                     if (tempVar == "")
                     {
                         $(this).css('background-color', '#FFEFDC');
@@ -304,8 +307,8 @@
                          but1_val = ' btn-danger">Зайнято';
                          but2_val = '<a href="#" class="btn btn-danger disabled">Замовити</a>';
                     }
-            var template =  ' <div class="btn-group btn-group-md btn-in-accordion">'+
-                            '<a href="" class="btn btn-default top">'+val.period_start_time.slice(0,-3)+' - '+val.period_end_time.slice(0,-3)+'</a>'+
+            var template =  ' <div class="btn-group btn-group-md btn-in-accordion" data-value="'+val.period_start_time.slice(0,-3)+'">'+
+                            '<a href="" class="btn btn-default top disabled">'+val.period_start_time.slice(0,-3)+' - '+val.period_end_time.slice(0,-3)+'</a>'+
                             '<a href="#" class="btn second disabled'+ but1_val+'</a>'+
                             but2_val+
                             '</div>' ;
@@ -366,5 +369,30 @@
             }, 300000);
         //кінець
 */
+        hidePeriods();
+        /**
+         *
+         */
+        setInterval(function(){
+            hidePeriods();
+        }, 300000);
+        /**
+         *
+         */
+        function hidePeriods(){
+            var cur_time = moment();
+            cur_time = cur_time.add('-20','minutes');
+
+            $('#real_queue_form_time').children().each(function(){
+                if($(this).val() < cur_time.format('HH:mm')){
+                    $(this).hide();
+                }
+            });
+            $('.queue_period').each(function(){
+                if($(this).attr('data-value') < cur_time.format('HH:mm')){
+                    $(this).hide();
+                }
+            });
+        }
     });
 </script>

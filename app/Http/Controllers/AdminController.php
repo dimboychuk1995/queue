@@ -118,6 +118,7 @@ class AdminController extends Controller
         unset($data['_token']);
         $data['register_key'] = $cur_date;
         $data['is_real_queue'] = true;
+       // $data['is_present'] = true;
         $data['is_admin_record'] = true;
         $queueModel->create($data);
         $data['register_key'] = substr($cur_date, -4);
@@ -125,14 +126,29 @@ class AdminController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function show($id)
+    public function storeDefaultSettings(Request $request)
     {
-        //
+        $data = $request->all();
+        $def_day = new Default_day();
+        $def_set = new Default_setting();//todo Зробити функцію для перевірки існуючих записів
+        $def_day->day_name = $data['name'];
+        $def_day->save();
+        $day_id = $def_day->id;
+        foreach($data['period_array'] as $key => $period){
+            foreach($period as $key => $val){
+                $def_set_store['period_time'] = 20;
+                $def_set_store['day_id'] = $day_id;
+                $def_set_store['start_time'] = $val['start_time'];
+                $def_set_store['end_time'] = $val['end_time'];
+                $def_set_store['workers_number'] = $val['workers_number'];
+                $def_set->create($def_set_store);
+            }
+
+        }
+        $res = 1;//todo зробити функціонал помилок і повідомлень
+return Response::json($res);
     }
 
     /**
