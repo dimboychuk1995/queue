@@ -782,7 +782,7 @@
                           <div role="form">
                               <div class="form-group">
                                   <label for="timeFrom">Назва налаштування</label>
-                                  <input type="text" class="time-from form-control" id="nameSetting" placeholder="Назва типового налаштування">
+                                  <input type="text" class="time-from form-control" id="def_set_name" placeholder="Назва типового налаштування">
                               </div>
                               <hr>
                               <div class="row appendSec">
@@ -792,11 +792,11 @@
                               </div>
                               <div id="" class="form-group period cloneIdSec">
                                   <label id="periodSec">Період з    </label>
-                                  <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="periodFromSec" placeholder="">
+                                  <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="def_set_period_start" placeholder="">
                                   <label id="period2Sec">по</label>
-                                  <input type="text" class="time-from form-control periodOnModal-3" id="periodToSec" placeholder="">
+                                  <input type="text" class="time-from form-control periodOnModal-3" id="def_set_period_end" placeholder="">
                                   <label for="countOperator">Кількість операторів</label>
-                                  <input type="text" class="form-control countOperatorOnModal-3" id="countOperatorSec" placeholder="">
+                                  <input type="text" class="form-control countOperatorOnModal-3" id="def_set_count_workers" placeholder="">
                                   <button type="button" class="btn btn-success btn-md btnSaveOnModal6">Видалити</button>
                               </div>
                           </div>
@@ -955,12 +955,12 @@
                */
               $(document).on('click', '#successSettingBySelectDate', function(){
                   $.ajax({//send data
-                      method:"POST", //Todo Перевести на метод пост
+                      method:"POST",
                       url: '{{ route('admin_queue_set_default_setting') }}',
                       data:{
                           id : $("#default_setting_list").val(),
                           date:$("#dataToday-2").val(),
-                          _token: '{{csrf_token()}}'//todo вичитати про токени (повинні бути в кожному ajax запиті
+                          _token: '{{csrf_token()}}'
                       }
                   }).done(function(data){//change labels and disable button
                       $('#modal-5').modal('hide');
@@ -992,14 +992,12 @@
                *Обробник для збереження стандартних налаштувань
                */
               $('#create_def_setting').click(function(){
-
                   $('.cloneIdSec :input').each(function(){
                       if($(this).val() == '' && !$(this).is('button')){//todo зробити функціонал збору даних з рядкыв в один масив
                           alert('заповніть всі періоди'+$(this));
-                      }else{
-                          console.log($(this));
                       }
                   });
+                  getPeriods($("#def_set_period_start").val(), $("#def_set_period_end").val());
               });
               /**
                *
@@ -1023,6 +1021,54 @@
                       if($(this).attr('data-value') < cur_time.format('HH:mm')){
                           $(this).hide();
                       }
+                  });
+              }
+
+              /**
+               *
+               * @param p_start
+               * @param p_end
+               */
+              function getPeriods(p_start, p_end){
+                  //date temp variables
+                  var start_period = moment();
+                  var temp_start_period = moment();
+                  var end_period = moment();
+                  var count_workers = $('#def_set_count_workers').val();
+                  end_period = end_period.hour(p_end.slice(0,2));
+                  end_period = end_period.minutes(p_end.slice(3));
+                  start_period = start_period.hour(p_start.slice(0,2));
+                  start_period = start_period.minutes(p_start.slice(3));
+                  //trigerr
+                  var end_of_period = false;
+                  //result array with periods
+                  var period_array = [];
+                  var temp = {};
+                  while(!end_of_period){
+
+                      temp = {
+                          'workers number' : count_workers,
+                          'start_time' : start_period.format('HH:mm'),
+                          'end_time' : start_period.add('20', 'minutes').format('HH:mm'),
+                          'period_time' : 20
+                      };
+                      period_array.push(temp);
+
+                      if(start_period >= end_period){
+                          end_of_period = true;
+                      }
+                  }
+                  console.log(period_array);
+                  $.ajax({//send data
+                      method:"POST",
+                      url: '{{ route('admin_create_dafault_settings') }}',
+                      data:{
+                          day_name : $("#def_set_name").val(),
+                          p_array: period_array,
+                          _token: '{{csrf_token()}}'
+                      }
+                  }).done(function(data){//change labels and disable button
+                      console.log(data);
                   });
               }
 

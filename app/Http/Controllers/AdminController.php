@@ -133,16 +133,17 @@ class AdminController extends Controller
         $data = $request->all();
         $def_day = new Default_day();
         $def_set = new Default_setting();//todo Çğîáèòè ôóíêö³ş äëÿ ïåğåâ³ğêè ³ñíóş÷èõ çàïèñ³â
-        $def_day->day_name = $data['name'];
+        $def_day->day_name = $data['day_name'];
         $def_day->save();
         $day_id = $def_day->id;
-        foreach($data['period_array'] as $key => $period){
+       // dd($data['p_array']);
+        foreach($data['p_array'] as $key => $period){
             foreach($period as $key => $val){
                 $def_set_store['period_time'] = 20;
                 $def_set_store['day_id'] = $day_id;
                 $def_set_store['start_time'] = $val['start_time'];
                 $def_set_store['end_time'] = $val['end_time'];
-                $def_set_store['workers_number'] = $val['workers_number'];
+                $def_set_store['workers_number'] = $val['workers_number'];dd($def_set_store);
                 $def_set->create($def_set_store);
             }
 
