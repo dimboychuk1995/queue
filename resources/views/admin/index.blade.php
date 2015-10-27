@@ -781,7 +781,7 @@
                       <div class="modal-body">
                           <div role="form">
                               <div class="form-group">
-                                  <label for="timeFrom">Назва налаштування</label>
+                                  <label for="def_set_name">Назва налаштування</label>
                                   <input type="text" class="time-from form-control" id="def_set_name" placeholder="Назва типового налаштування">
                               </div>
                               <hr>
@@ -792,11 +792,11 @@
                               </div>
                               <div id="" class="form-group period cloneIdSec">
                                   <label id="periodSec">Період з    </label>
-                                  <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="def_set_period_start" placeholder="">
+                                  <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" placeholder="">
                                   <label id="period2Sec">по</label>
-                                  <input type="text" class="time-from form-control periodOnModal-3" id="def_set_period_end" placeholder="">
+                                  <input type="text" class="time-from form-control periodOnModal-3" placeholder="">
                                   <label for="countOperator">Кількість операторів</label>
-                                  <input type="text" class="form-control countOperatorOnModal-3" id="def_set_count_workers" placeholder="">
+                                  <input type="text" class="form-control countOperatorOnModal-3" placeholder="">
                                   <button type="button" class="btn btn-success btn-md btnSaveOnModal6">Видалити</button>
                               </div>
                           </div>
@@ -997,7 +997,11 @@
                           alert('заповніть всі періоди'+$(this));
                       }
                   });
-                  getPeriods($("#def_set_period_start").val(), $("#def_set_period_end").val());
+                  $('.cloneIdSec').each(function(){
+                      //console.log($(this).children().eq(1).val()+ $(this).children().eq(3).val()+ $(this).children().eq(5).val());
+                      getPeriods($(this).children().eq(1).val(), $(this).children().eq(3).val(), $(this).children().eq(5).val());
+                  });
+
               });
               /**
                *
@@ -1024,17 +1028,31 @@
                   });
               }
 
+              function getDefDaySettings(){
+                  var date = $('#dataToday-2').val();
+                  $.ajax({//send data
+                      method:"POST",
+                      url: '{{ route('admin_edit_default_settings') }}',
+                      data:{
+                          date: date,
+                          _token: '{{csrf_token()}}'
+                      }
+                  }).done(function(data){//change labels and disable button
+                      console.log(data);
+                  });
+              }
+
               /**
                *
                * @param p_start
                * @param p_end
                */
-              function getPeriods(p_start, p_end){
+              function getPeriods(p_start, p_end, p_workers){
                   //date temp variables
                   var start_period = moment();
                   var temp_start_period = moment();
                   var end_period = moment();
-                  var count_workers = $('#def_set_count_workers').val();
+                  var count_workers = p_workers;
                   end_period = end_period.hour(p_end.slice(0,2));
                   end_period = end_period.minutes(p_end.slice(3));
                   start_period = start_period.hour(p_start.slice(0,2));
@@ -1047,7 +1065,7 @@
                   while(!end_of_period){
 
                       temp = {
-                          'workers number' : count_workers,
+                          'workers_number' : count_workers,
                           'start_time' : start_period.format('HH:mm'),
                           'end_time' : start_period.add('20', 'minutes').format('HH:mm'),
                           'period_time' : 20

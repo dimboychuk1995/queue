@@ -133,19 +133,20 @@ class AdminController extends Controller
         $data = $request->all();
         $def_day = new Default_day();
         $def_set = new Default_setting();//todo Зробити функцію для перевірки існуючих записів
-        $def_day->day_name = $data['day_name'];
-        $def_day->save();
-        $day_id = $def_day->id;
+        //$def_day->day_name = $data['day_name'];
+        $def_day->updateOrCreate(array('day_name' => $data['day_name']));
+        $day_id = $def_day->where('day_name', '=', $data['day_name'])->get();
+        $day_id = $day_id[0]['id'];
        // dd($data['p_array']);
         foreach($data['p_array'] as $key => $period){
-            foreach($period as $key => $val){
+           // foreach($period as $key => $val){
                 $def_set_store['period_time'] = 20;
                 $def_set_store['day_id'] = $day_id;
-                $def_set_store['start_time'] = $val['start_time'];
-                $def_set_store['end_time'] = $val['end_time'];
-                $def_set_store['workers_number'] = $val['workers_number'];dd($def_set_store);
+                $def_set_store['start_time'] = $period['start_time'];
+                $def_set_store['end_time'] = $period['end_time'];
+                $def_set_store['workers_number'] = $period['workers_number'];
                 $def_set->create($def_set_store);
-            }
+           // }
 
         }
         $res = 1;//todo зробити функціонал помилок і повідомлень
@@ -158,9 +159,23 @@ return Response::json($res);
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $date = $request->input('date');
+        $cur_settings = Current_setting::where('day_date', '=', $date)->get();
+        $periods = array();//todo алгоритм зібрання періодів до купи
+        foreach ($cur_settings as $c){
+
+            $check = Queue::where('start_time', '=', $c['period_start_time'])
+                ->where('date', '=',$c['day_date'] )->get();
+            $period['period_start_time'] =  $c['period_start_time'];
+            $period['period_end_time'] =  $c['period_end_time'];
+            $period['queue'] =  $check;
+            $period['count'] =  $check->count();
+            array_push($periods, $period);
+        }
+        return Response::json($periods);
+
     }
 
     /**
