@@ -748,15 +748,6 @@
                             </div>
                         </div>
                         </div>
-                      <div id="" class="form-group period cloneId">
-                          <label id="period">Період з    </label>
-                          <input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" id="periodFrom" placeholder="">
-                          <label id="period2">по</label>
-                          <input type="text" class="time-from form-control periodOnModal-3" id="periodTo" placeholder="">
-                          <label for="countOperator">Кількість операторів</label>
-                          <input type="text" class="form-control countOperatorOnModal-3" id="countOperator" placeholder="">
-                          <button type="button" class="btn btn-success btn-md btnSaveOnModal3">Зберегти</button>
-                      </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -999,9 +990,13 @@
                   });
                   $('.cloneIdSec').each(function(){
                       //console.log($(this).children().eq(1).val()+ $(this).children().eq(3).val()+ $(this).children().eq(5).val());
-                      getPeriods($(this).children().eq(1).val(), $(this).children().eq(3).val(), $(this).children().eq(5).val());
+                      getPeriods($(this).children().eq(1).val(), $(this).children().eq(3).val(), $(this).children().eq(5).val(), 0);
                   });
 
+              });
+
+              $('.btn-non-standart-settings').click(function(){
+                  getDefDaySettings();
               });
               /**
                *
@@ -1027,18 +1022,37 @@
                       }
                   });
               }
-
+            /**
+             *
+             */
               function getDefDaySettings(){
                   var date = $('#dataToday-2').val();
                   $.ajax({//send data
                       method:"POST",
-                      url: '{{ route('admin_edit_default_settings') }}',
+                      url: '{{ route('admin_get_current_settings') }}',
                       data:{
                           date: date,
                           _token: '{{csrf_token()}}'
                       }
                   }).done(function(data){//change labels and disable button
                       console.log(data);
+                      $('#timeFrom').text(data.day_start.slice(0,-3));
+                      $('#timeTo').text(data.day_end.slice(0,-3));
+                      var res = '';
+                      $(".cloneId").remove();
+                      $.each(data.periods, function(k, per){
+                     res = '<div class="form-group period cloneId">'+
+                               '<label id="period">Період з    </label>'+
+                                '<input type="text" class="time-from form-control periodOnModal-3 textOnPeriod" value="'+per.start_time.slice(0,-3)+'">'+
+                               '<label id="period2">по</label>'+
+                                '<input type="text" class="time-from form-control periodOnModal-3" value="'+per.end_time.slice(0,-3)+'">'+
+                               '<label for="countOperator">Кількість операторів</label>'+
+                                '<input type="text" class="form-control countOperatorOnModal-3" value="'+per.workers_number+'">'+
+                               '<button type="button" class="btn btn-success btn-md btnSaveOnModal3">Вилучити</button>'+
+                               '</div>';
+                          $(".append").after(res);
+                      });
+
                   });
               }
 
@@ -1047,7 +1061,7 @@
                * @param p_start
                * @param p_end
                */
-              function getPeriods(p_start, p_end, p_workers){
+              function getPeriods(p_start, p_end, p_workers, route){
                   //date temp variables
                   var start_period = moment();
                   var temp_start_period = moment();
@@ -1077,9 +1091,11 @@
                       }
                   }
                   console.log(period_array);
-                  $.ajax({//send data
+                  switch(route){
+                      case 0:
+                      $.ajax({//send data
                       method:"POST",
-                      url: '{{ route('admin_create_dafault_settings') }}',
+                      url: '{{ route('admin_create_default_settings') }}',
                       data:{
                           day_name : $("#def_set_name").val(),
                           p_array: period_array,
@@ -1088,6 +1104,21 @@
                   }).done(function(data){//change labels and disable button
                       console.log(data);
                   });
+                          break;
+                      case 1:
+                          $.ajax({//send data
+                              method:"POST",
+                              url: '{{ route('admin_edit_current_settings') }}',
+                              data:{
+                                  day_name : $("#def_set_name").val(),
+                                  p_array: period_array,
+                                  _token: '{{csrf_token()}}'
+                              }
+                          }).done(function(data){//change labels and disable button
+                              console.log(data);
+                          });
+                          break;
+                  }
               }
 
           });

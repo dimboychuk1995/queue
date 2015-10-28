@@ -23,6 +23,7 @@ class IndexController extends Controller
         $queueModel = new Queue();
         $queue = $queueModel->where('date', '=', $today)->get();
         $cur_settings = Current_setting::where('day_date', '=', $today)->get();
+        $cur_settings->sortBy('period_start_time');
         $result = array();
         foreach ($cur_settings as $c){
             $check = Queue::where('start_time', '=', $c['period_start_time'])

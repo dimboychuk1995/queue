@@ -25,6 +25,7 @@ class AdminController extends Controller
         $queueModel = new Queue();
         $queue = $queueModel->where('date', '=', $today)->get();
         $cur_settings = Current_setting::where('day_date', '=', $today)->get();
+        $cur_settings->sortBy('period_start_time');
         $default_settings_name_list = Default_day::all();
         $check_count = array();
         $periods = array();
@@ -78,6 +79,7 @@ class AdminController extends Controller
         $queueModel = new Queue();
         $queue = $queueModel->where('date', '=', $date)->get();
         $cur_settings = Current_setting::where('day_date', '=', $date)->get();
+        $cur_settings->sortBy('period_start_time');
         $periods = array();
         foreach ($cur_settings as $c){
 
@@ -159,22 +161,48 @@ return Response::json($res);
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function getCurSet(Request $request)
     {
         $date = $request->input('date');
+        $date = Carbon::today()->toDateString();
         $cur_settings = Current_setting::where('day_date', '=', $date)->get();
+        $cur_settings = $cur_settings->sortBy('period_start_time');
+        //масив тимчасових(буферних змінних)
         $periods = array();//todo алгоритм зібрання періодів до купи
-        foreach ($cur_settings as $c){
-
-            $check = Queue::where('start_time', '=', $c['period_start_time'])
-                ->where('date', '=',$c['day_date'] )->get();
-            $period['period_start_time'] =  $c['period_start_time'];
-            $period['period_end_time'] =  $c['period_end_time'];
-            $period['queue'] =  $check;
-            $period['count'] =  $check->count();
-            array_push($periods, $period);
+        $per_end = '';
+        $per_start = '';
+        $temp_workers_num = 0;
+        foreach ($cur_settings as $k => $c){
+        if($k == 0){
+            $per_start = $c['period_start_time'];
+            $per_end = $c['period_end_time'];
+            $temp_workers_num = $c['workers_number'];
+            continue;
         }
-        return Response::json($periods);
+            if($c['period_start_time'] == $per_end and $temp_workers_num == $c['workers_number']){
+                $per_end = $c['period_end_time'];
+            }else{
+                $period['start_time'] = $per_start;
+                $period['end_time'] = $per_end;
+                $period['workers_number'] = $temp_workers_num;
+                //
+                array_push($periods, $period);
+                //
+                $per_start = $c['period_start_time'];
+                $per_end = $c['period_end_time'];
+                $temp_workers_num = $c['workers_number'];
+            }
+
+        }
+        $period['start_time'] = $per_start;
+        $period['end_time'] = $per_end;
+        $period['workers_number'] = $temp_workers_num;
+        array_push($periods, $period);
+        $res['day_start'] = $cur_settings[0]['period_start_time'];
+        $res['day_end'] = $cur_settings[count($cur_settings) -1]['period_end_time'];;
+        $res['periods'] = $periods;
+
+        return Response::json($res);
 
     }
 
