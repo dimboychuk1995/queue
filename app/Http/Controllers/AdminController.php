@@ -209,17 +209,11 @@ return Response::json($res);
 
     public function editCurSet(Request $request){
         $data = $request->all();
-        $cur_set = new Current_setting();
         $date = $data['date'];
         foreach($data['p_array'] as $key => $period){
-            $cur_set->updateOrCreate(
-                ['day_date' => $date, 'period_start_time' => $period['period_start_time'], 'period_end_time' => $period['period_end_time'], 'workers_number' => $period['workers_number'],'period_time' => $period['period_time']],
-                ['day_date' => $date, 'period_start_time' => $period['period_start_time'], 'period_end_time' => $period['period_end_time'], 'workers_number' => $period['workers_number'],'period_time' => $period['period_time']]
-            );
-
-
+            Current_setting::where()->get();
         }
-        return Response::json($data);
+        return Response::json(1);
 
     }
 

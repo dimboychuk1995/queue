@@ -1120,12 +1120,14 @@
                               method:"POST",
                               url: '{{ route('admin_edit_current_settings') }}',
                               data:{
-                                  day_name : $("#def_set_name").val(),
+                                  date : $("#dataToday-2").val(),
                                   p_array: period_array,
                                   _token: '{{csrf_token()}}'
                               }
                           }).done(function(data){//change labels and disable button
                               console.log(data);
+                              $('#modal-3').modal('hide');
+                              $()
                           });
                           break;
                   }
