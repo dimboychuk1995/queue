@@ -751,7 +751,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
+                    <button type="button" id= "edit_cur_set" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
 
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити редагування</button>
                 </div>
@@ -995,6 +995,17 @@
 
               });
 
+              $('#edit_cur_set').click(function(){
+
+                  $('.cloneId').each(function(){
+                      //console.log($(this).children().eq(1).val()+ $(this).children().eq(3).val()+ $(this).children().eq(5).val());
+                      getPeriods($(this).children().eq(1).val(), $(this).children().eq(3).val(), $(this).children().eq(5).val(), 1);
+                  });
+              });
+
+              /**
+               *
+               */
               $('.btn-non-standart-settings').click(function(){
                   getDefDaySettings();
               });
@@ -1035,7 +1046,7 @@
                           _token: '{{csrf_token()}}'
                       }
                   }).done(function(data){//change labels and disable button
-                      console.log(data);
+                      console.log(date);
                       $('#timeFrom').text(data.day_start.slice(0,-3));
                       $('#timeTo').text(data.day_end.slice(0,-3));
                       var res = '';

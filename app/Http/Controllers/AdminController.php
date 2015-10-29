@@ -164,7 +164,7 @@ return Response::json($res);
     public function getCurSet(Request $request)
     {
         $date = $request->input('date');
-        $date = Carbon::today()->toDateString();
+        //$date = Carbon::today()->toDateString();
         $cur_settings = Current_setting::where('day_date', '=', $date)->get();
         $cur_settings = $cur_settings->sortBy('period_start_time');
         //масив тимчасових(буферних змінних)
@@ -205,6 +205,24 @@ return Response::json($res);
         return Response::json($res);
 
     }
+
+
+    public function editCurSet(Request $request){
+        $data = $request->all();
+        $cur_set = new Current_setting();
+        $date = $data['date'];
+        foreach($data['p_array'] as $key => $period){
+            $cur_set->updateOrCreate(
+                ['day_date' => $date, 'period_start_time' => $period['period_start_time'], 'period_end_time' => $period['period_end_time'], 'workers_number' => $period['workers_number'],'period_time' => $period['period_time']],
+                ['day_date' => $date, 'period_start_time' => $period['period_start_time'], 'period_end_time' => $period['period_end_time'], 'workers_number' => $period['workers_number'],'period_time' => $period['period_time']]
+            );
+
+
+        }
+        return Response::json($data);
+
+    }
+
 
     /**
      * Update the specified resource in storage.

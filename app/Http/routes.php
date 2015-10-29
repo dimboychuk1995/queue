@@ -13,7 +13,7 @@
 
 //Route::get('/', 'IndexController@index');
 get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
-get('/admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
+get('/manage', ['as' => 'manage', 'uses' => 'AdminController@index']);
 post('/queue_create', ['as' => 'queue_create', 'uses' => 'IndexController@store']);
 post('/real_queue_create', ['as' => 'real_queue_create', 'uses' => 'AdminController@store']);
 post('/queue_confirm', ['as' => 'queue_confirm', 'uses' => 'AdminController@update']);

@@ -25,7 +25,7 @@
                 </div>
                     <div class="collapse navbar-collapse" id="responsive-menu">
                         <ul class="nav navbar-nav">
-                            <li class="header-href"><a href="{{ route('admin') }}">admin page</a></li>
+                            <li class="header-href"><a href="{{ route('manage') }}">admin page</a></li>
                             <li class="dropdown header-href">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">place2 <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
