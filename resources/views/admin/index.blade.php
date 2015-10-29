@@ -461,7 +461,7 @@
                     <div class="collapse" id="spoiler-1">
                         <div class="well">
                             <p><strong>На даній формі адміністратор змінює налаштування, якщо ті відрізняються від тих, що по замовчуванню!</strong></p> 
-                            <form role="form">
+                            <div role="form">
                                  <div class="row">
                                     <div class="col-xs-6">
                                          <h5>Виберіть дату та виберіть налаштування для даної дати</h5> 
@@ -487,7 +487,7 @@
                                         <div class="btn btn-success" data-target="#modal-6" data-toggle="modal">Додати типові налаштування</div>
                                     </div>
                                  </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
             </div> 
@@ -749,11 +749,10 @@
                         </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id= "edit_cur_set" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
-
-                    <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити редагування</button>
+                    <div class="modal-footer">
+                        <button type="button" id= "edit_cur_set" class="btn btn-success btn-lg btn-successOnModal-3">Підтвердити <i class="fa fa-check"></i></button>
+                        <button class="btn btn-danger" type="button" data-dismiss="modal">Відмінити редагування</button>
+                    </div>
                 </div>
             </div>  
         </div>
